@@ -44,7 +44,7 @@ public class ScannerHelper {
 
 	public boolean isYes(String text) {
 		System.out.print(text);
-		String answer = reader.next().toLowerCase().trim().replaceAll("\\W", "");
+		String answer = reader.next().toLowerCase().trim().replaceAll("\\p{P}", "");
 		return "y".equals(answer) || "yes".equals(answer) || "да".equals(answer);
 	}
 
