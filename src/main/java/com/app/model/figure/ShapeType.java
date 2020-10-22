@@ -2,10 +2,10 @@ package com.app.model.figure;
 
 public enum ShapeType {
 	QUADRANGULAR("Четырехугольник"),
-	SQUARE("Квардат"),
+	SQUARE("Квадрат"),
 	RHOMBUS("Ромб"),
 	RECTANGLE("Прямоугольник"),
-	TRAPEZIUM("Трапеция"),
+	POLYGON("Многоугольник"),
 	PARALLELOGRAM("Параллелограмм"),
 	TRIANGLE("Треугольник"),
 	CIRCLE("Окружность"),

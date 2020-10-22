@@ -4,6 +4,7 @@ import com.app.model.figure.Shape;
 import com.app.model.point.Point;
 
 import java.util.List;
+import java.util.Locale;
 
 public abstract class RoundShape<T extends Point> extends Shape<T> {
 	protected double radius;
@@ -56,6 +57,6 @@ public abstract class RoundShape<T extends Point> extends Shape<T> {
 
 	@Override
 	public String toString() {
-		return shapeType.toString() + ". Центральная точка: " + center + ", радиус=" + radius;
+		return shapeType.toString() + ". Центральная точка: " + center + ", радиус=" + String.format(Locale.ENGLISH, "%1$,.2f", radius);
 	}
 }

@@ -173,17 +173,6 @@ public final class Utils {
 	}
 
 	/**
-	 * Поворачивает фигуру на указанный угол в трехмерной плоскости
-	 *
-	 * @param points - лист с вершинами фигуры
-	 * @param degree - угол в градусах, на который нужно повернуть
-	 */
-	public static void rotateShape3D(List<Point3D> points, double degree) {
-		// TODO реализовать
-	}
-
-
-	/**
 	 * Масштабирует фигуру, относительно её центра
 	 *
 	 * @param points - лист с вершинами фигуры

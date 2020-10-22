@@ -1,6 +1,7 @@
 package com.app.model.figure.polygon;
 
 import com.app.model.figure.Shape;
+import com.app.model.figure.ShapeType;
 import com.app.model.point.Point2D;
 
 import java.util.List;
@@ -23,19 +24,34 @@ public class Polygon extends Shape<Point2D> {
 
 	public Polygon(List<Point2D> points) {
 		copyPoints(this.points, points);
+		center = calcMidPoint(this.points);
 		this.pointA = this.points.get(0);
 		this.pointB = this.points.get(1);
 		this.pointC = this.points.get(2);
 
 		this.side1 = calcDistance(pointA, pointB);
 		this.side2 = calcDistance(pointB, pointC);
+		shapeType = ShapeType.POLYGON;
 	}
 
-	// TODO Доделать площадь для многоугольника
+	/**
+	 * Вычисляет площадь многоугольника по формуле Гаусса
+	 * до этого был реализован этот вариант:
+	 * Площадь произвольного несамопересекающегося четырёхугольника, заданного на плоскости координатами своих вершин
+	 * * (x1,y1),(x2,y2),(x3,y3),(x4,y4) в порядке обхода, равна:
+	 * * S = |(x1-x2)(y1+y2) + (x2-x3)(y2+y3) + (x3-x4)(y3+y4) + (x4-x1)(y4+y1)| * 1/2
+	 *
+	 * @return - площадь любого многоугольника
+	 */
 	@Override
 	protected double calcArea() {
-		System.out.println("TODO Доделать площадь для многоугольника");
-		return 0;
+		double sumX = 0;
+		double sumY = 0;
+		for (int i = 0; i < points.size() - 1; i++) {
+			sumX = sumX + points.get(i).getX() * points.get(i + 1).getY();
+			sumY = sumY + points.get(i).getY() * points.get(i + 1).getX();
+		}
+		return 0.5 * Math.abs(sumX - sumY);
 	}
 
 	@Override
