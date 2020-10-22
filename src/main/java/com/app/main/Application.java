@@ -13,7 +13,7 @@ public class Application {
 		boolean itContinues = false;
 		while (!itContinues) {
 			System.out.println("Выберите действие:"
-					+ "\n\t1 - показать характеристики всех фигур,"
+					+ "\n\t1 - показать характеристики всех фигур"
 					+ "\n\t2 - выбрать конкретную фигуру (для действий над ней)"
 					+ "\n\t3 - выход"
 			);
@@ -84,7 +84,7 @@ public class Application {
 					itContinues = true;
 					break;
 				default:
-					System.out.println("Вы ввели число, отличное от отпредложенных");
+					System.out.println("Вы ввели число, отличное от предложенных");
 					break;
 			}
 		}
