@@ -1,7 +1,7 @@
 package com.app.factory;
 
-import com.app.model.figure.Shape;
 import com.app.model.point.Point;
+import com.app.model.shape.Shape;
 
 import java.util.List;
 

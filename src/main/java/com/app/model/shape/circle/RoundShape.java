@@ -1,7 +1,7 @@
-package com.app.model.figure.circle;
+package com.app.model.shape.circle;
 
-import com.app.model.figure.Shape;
 import com.app.model.point.Point;
+import com.app.model.shape.Shape;
 
 import java.util.List;
 import java.util.Locale;

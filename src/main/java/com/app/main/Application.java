@@ -2,8 +2,8 @@ package com.app.main;
 
 import com.app.helper.ScannerHelper;
 import com.app.helper.ShapeCreateHelper;
-import com.app.model.figure.Shape;
 import com.app.model.point.Point2D;
+import com.app.model.shape.Shape;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ public class Application {
 			+ "\n\t7 - Вернуться назад\n";
 	private final String CHOOSE_ACTION = "Выберите действие: ";
 	private final String ILLEGAL_INPUT = "Вы ввели число, отличное от предложенных";
-
 
 	public void start(List<Shape<Point2D>> shapes) {
 		boolean itContinues = true;

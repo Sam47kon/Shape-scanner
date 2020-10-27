@@ -1,8 +1,8 @@
 package com.app.main;
 
 import com.app.helper.ShapeCreateHelper;
-import com.app.model.figure.Shape;
 import com.app.model.point.Point2D;
+import com.app.model.shape.Shape;
 
 import java.util.List;
 

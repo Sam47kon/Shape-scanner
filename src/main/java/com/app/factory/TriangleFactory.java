@@ -1,7 +1,7 @@
 package com.app.factory;
 
-import com.app.model.figure.polygon.triangle.Triangle;
 import com.app.model.point.Point2D;
+import com.app.model.shape.polygon.triangle.Triangle;
 
 import java.util.List;
 

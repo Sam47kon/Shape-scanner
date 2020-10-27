@@ -1,8 +1,8 @@
-package com.app.model.figure.polygon;
+package com.app.model.shape.polygon;
 
-import com.app.model.figure.Shape;
-import com.app.model.figure.ShapeType;
 import com.app.model.point.Point2D;
+import com.app.model.shape.Shape;
+import com.app.model.shape.ShapeType;
 
 import java.util.List;
 

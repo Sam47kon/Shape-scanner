@@ -1,14 +1,12 @@
-package com.app.model.figure;
+package com.app.model.shape;
 
-import com.app.model.figure.interfaces.iMovable;
-import com.app.model.figure.interfaces.iRotatable;
-import com.app.model.figure.interfaces.iScalable;
 import com.app.model.point.Point;
+import com.app.model.shape.interfaces.iTransformable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Shape<T extends Point> implements iMovable<T>, iRotatable, iScalable {
+public abstract class Shape<T extends Point> implements iTransformable<T> {
 	protected final List<T> points;
 	protected T center;
 	protected ShapeType shapeType;

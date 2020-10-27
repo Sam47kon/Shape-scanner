@@ -1,8 +1,8 @@
 package com.app.helper;
 
 import com.app.factory.*;
-import com.app.model.figure.Shape;
 import com.app.model.point.Point2D;
+import com.app.model.shape.Shape;
 import com.sun.istack.internal.NotNull;
 
 import java.io.BufferedReader;

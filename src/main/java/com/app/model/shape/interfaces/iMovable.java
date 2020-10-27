@@ -1,7 +1,8 @@
-package com.app.model.figure.interfaces;
+package com.app.model.shape.interfaces;
 
 import com.app.model.point.Point;
 
+@FunctionalInterface
 public interface iMovable<T extends Point> {
 
 	/**

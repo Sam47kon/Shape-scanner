@@ -1,4 +1,4 @@
-package com.app.model.figure.interfaces;
+package com.app.model.shape.interfaces;
 
 public interface iScalable {
 	/**

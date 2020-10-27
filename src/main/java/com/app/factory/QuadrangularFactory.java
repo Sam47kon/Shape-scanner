@@ -1,7 +1,7 @@
 package com.app.factory;
 
-import com.app.model.figure.polygon.quadrangular.Quadrangular;
 import com.app.model.point.Point2D;
+import com.app.model.shape.polygon.quadrangular.Quadrangular;
 
 import java.util.List;
 

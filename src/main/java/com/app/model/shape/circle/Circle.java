@@ -1,7 +1,7 @@
-package com.app.model.figure.circle;
+package com.app.model.shape.circle;
 
-import com.app.model.figure.ShapeType;
 import com.app.model.point.Point2D;
+import com.app.model.shape.ShapeType;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.app.model.figure;
+package com.app.model.shape;
 
 public enum ShapeType {
 	QUADRANGULAR("Четырехугольник"),
