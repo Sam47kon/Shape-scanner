@@ -13,21 +13,26 @@ import java.util.*;
 
 public class ShapeCreateHelper {
 
-	public static List<Shape<Point2D>> getShapesByFile(String fileName) {
-		List<Shape<Point2D>> shapes = new ArrayList<>();
+	private static int LINE_NUM = 1;
+
+	public static int moveToNextLine() {
+		return LINE_NUM++;
+	}
+
+	public static TreeMap<String, Shape<Point2D>> getShapesByFile(String fileName) {
+		TreeMap<String, Shape<Point2D>> shapes = new TreeMap<>(Comparator.comparingInt(Integer::parseInt));
 		iShapeFactory<Point2D> factory;
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 			String line;
-			int lineNum = 1;
+//			int lineNum = 1;
 			while (reader.ready()) {
 				line = reader.readLine();
-				List<Point2D> points = definePoints(line, lineNum);
-				lineNum++;
-				if (points.size() < 2) {
-					continue;
+				List<Point2D> points = definePoints(line, true);
+				if (points.size() > 1) {
+					factory = getShapeFactory(points);
+					shapes.put(String.valueOf(LINE_NUM), factory.createShape(points));
 				}
-				factory = getShapeFactory(points);
-				shapes.add(factory.createShape(points));
+				LINE_NUM++;
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Файл не найден");
@@ -55,32 +60,36 @@ public class ShapeCreateHelper {
 	}
 
 
-	private static List<Point2D> definePoints(String line, int lineNum) {
-		String[] values = line.split(";");
-		List<Point2D> points = new ArrayList<>();
+	private static List<Point2D> definePoints(String line, boolean displayed) {
+		String[] points = line.split(";");
+		List<Point2D> listPoints = new ArrayList<>();
 		double x;
 		double y;
-		for (String value : values) {
-			value = value.replaceAll("[A-zА-я]|[\\[\\](){}]", "").trim();
-			try (Scanner scanner = new Scanner(value)) {
+		for (String point : points) {
+			point = point.replaceAll("[A-zА-я]|[\\[\\](){}]|=", "").trim().replace(",", " ");
+			try (Scanner scanner = new Scanner(point)) {
+				scanner.useLocale(Locale.US);
 				if (scanner.hasNextDouble()) {
 					x = scanner.nextDouble();
+
 					y = scanner.nextDouble();
-					points.add(new Point2D(x, y));
+					listPoints.add(new Point2D(x, y));
 				}
 			} catch (InputMismatchException e) {
-				System.out.println("Сканер не распознал координаты");
+				if (displayed) System.out.println("В строке №" + LINE_NUM + " - произошла ошибка при считывании");
+				return listPoints;
 			} catch (NoSuchElementException e) {
-				System.out.println("В строке №" + lineNum + " нет пар координат!");
+				if (displayed) System.out.println("В строке №" + LINE_NUM + " - нет пар координат!");
+				return listPoints;
 			}
 		}
-		int pointSize = points.size();
-		if (pointSize < 2) {
-			System.out.println("В строке №" + lineNum + " - " + pointSize
+		int pointSize = listPoints.size();
+		if (pointSize < 2 && displayed) {
+			System.out.println("В строке №" + LINE_NUM + " - " + pointSize
 					+ (pointSize == 0 ? " координат" : " координата")
 					+ ". Строка пропускается");
 		}
-		return points;
+		return listPoints;
 	}
 
 	public static iShapeFactory<Point2D> getShapeFactory(@NotNull List<Point2D> points) {
@@ -99,5 +108,9 @@ public class ShapeCreateHelper {
 				factory = new PolygonFactory();
 		}
 		return factory;
+	}
+
+	public static boolean isShapeInLine(String line) {
+		return definePoints(line, false).size() > 1;
 	}
 }

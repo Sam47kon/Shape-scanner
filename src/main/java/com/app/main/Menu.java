@@ -5,9 +5,13 @@ import com.app.helper.ShapeCreateHelper;
 import com.app.model.point.Point2D;
 import com.app.model.shape.Shape;
 
-import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class Menu {
 	private final String MAIN_MENU = "Выберите действие:"
@@ -25,10 +29,10 @@ public class Menu {
 			+ "\n\t7 - Вернуться назад\n";
 	private final String CHOOSE_ACTION = "Выберите действие: ";
 	private final String ILLEGAL_INPUT = "Вы ввели число, отличное от предложенных";
-	private final List<Shape<Point2D>> shapes;
+	private final TreeMap<String, Shape<Point2D>> shapes;
 	private final String fileName;
 
-	public Menu(List<Shape<Point2D>> shapes, String fileName) {
+	public Menu(TreeMap<String, Shape<Point2D>> shapes, String fileName) {
 		this.shapes = shapes;
 		this.fileName = fileName;
 	}
@@ -44,15 +48,11 @@ public class Menu {
 			switch (ScannerHelper.getIntFromInput(CHOOSE_ACTION)) {
 				case 1:
 					if (shapesIsEmpty()) break;
-					displayText(shapes.toString());
+					displayAllShapes();
 					break;
 				case 2:
 					if (shapesIsEmpty()) break;
-					int pos = shapes.size();
-					while (pos >= shapes.size() || pos < 0) {
-						pos = ScannerHelper.getIntFromInput("Выберите номер от 1 до " + shapes.size() + ": ") - 1;
-					}
-					actionsOnShape(pos);
+					getShapeForAction();
 					break;
 				case 3:
 					addShape();
@@ -71,7 +71,24 @@ public class Menu {
 		ScannerHelper.close();
 	}
 
-	private void actionsOnShape(int position) {
+	private void displayAllShapes() {
+		for (String key : shapes.keySet()) {
+			displayText("Строка № " + key + ": " + shapes.get(key));
+		}
+	}
+
+	private void getShapeForAction() {
+		boolean validate;
+		String key;
+		do {
+			key = String.valueOf(ScannerHelper.getIntFromInput("Доступные фигуры:\n " + shapes.keySet() + "\nВведите номер: "));
+			validate = shapes.containsKey(key);
+
+		} while (!validate);
+		actionsOnShape(key);
+	}
+
+	private void actionsOnShape(String position) {
 		Shape<Point2D> shape = shapes.get(position);
 		boolean itContinues = true;
 		displayText("Вы выбрали: " + shape + "\nЧто необходимо сделать с фигурой?");
@@ -128,8 +145,8 @@ public class Menu {
 		showChanges(shape);
 	}
 
-	private boolean deleteShape(int position) {
-		if (ScannerHelper.isYes("Действительно удалить фигуру? (действие необратимо, фигура удалится из файла!)\n")) {
+	private boolean deleteShape(String position) {
+		if (ScannerHelper.isYes("Действительно удалить фигуру?\n")) {
 			displayText("Вы удалили фигуру");
 			shapes.remove(position);
 			return false;
@@ -140,8 +157,36 @@ public class Menu {
 	}
 
 	private void saveChanges() {
-		try (FileWriter writer = new FileWriter(fileName)) {
-			// TODO остановился здесь
+		StringBuilder sb = new StringBuilder();
+		try {
+			List<String> fileContent = new ArrayList<>(Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8));
+			for (int i = 0; i < fileContent.size(); i++) {
+				Shape<Point2D> shape = shapes.get(String.valueOf(i + 1));
+				String newLine;
+				if (shape != null) {
+					newLine = shape.convertPointsToString();
+					String line = fileContent.get(i);
+					if (!line.equals(newLine)) {
+						fileContent.set(i, newLine);
+						sb.append("Фигура в строке №").append(i + 1).append(" заменена:\nБыло:\n\t")
+								.append(line).append("\nСтало:\n\t").append(newLine);
+					}
+				} else {
+					if (ShapeCreateHelper.isShapeInLine(fileContent.get(i))) {
+						sb.append("Фигура удалена в строке №").append(i + 1);
+						fileContent.set(i, "");
+					}
+				}
+			}
+			sb.append("\n");
+			if (shapes.size() != 0) {
+				for (int i = fileContent.size() + 1; i <= Integer.parseInt(shapes.lastKey()); i++) {
+					fileContent.add(shapes.get(String.valueOf(i)).convertPointsToString());
+					sb.append("Добавлена новая фигура в строку №").append(i).append(" с координатами:\n\t").append(fileContent.get(i - 1));
+				}
+			}
+			displayText(sb.toString());
+			Files.write(Paths.get(fileName), fileContent, StandardCharsets.UTF_8);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -158,7 +203,7 @@ public class Menu {
 	private void addShape() {
 		List<Point2D> points = ShapeCreateHelper.createPointFromInput();
 		Shape<Point2D> createdShape = ShapeCreateHelper.getShapeFactory(points).createShape(points);
-		shapes.add(createdShape);
+		shapes.put(String.valueOf(ShapeCreateHelper.moveToNextLine()), createdShape);
 		displayText("Добавлена фигура:" + createdShape);
 	}
 
@@ -169,5 +214,4 @@ public class Menu {
 	public void displayText(String textToDisplay) {
 		System.out.println(textToDisplay);
 	}
-
 }

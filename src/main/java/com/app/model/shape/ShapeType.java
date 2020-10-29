@@ -23,6 +23,6 @@ public enum ShapeType {
 
 	@Override
 	public String toString() {
-		return "\nТип фигуры: " + title;
+		return "Тип фигуры: " + title;
 	}
 }

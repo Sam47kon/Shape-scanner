@@ -191,4 +191,10 @@ public final class Utils {
 			original.add(new Point2D(point.getX(), point.getY()));
 		}
 	}
+
+	public static void copyPoints3D(List<Point3D> original, List<Point3D> source) {
+		for (Point3D point : source) {
+			original.add(new Point3D(point.getX(), point.getY(), point.getZ()));
+		}
+	}
 }

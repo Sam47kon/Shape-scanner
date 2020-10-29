@@ -2,6 +2,7 @@ package com.app.model.shape.circle;
 
 import com.app.model.point.Point3D;
 import com.app.model.shape.ShapeType;
+import com.app.util.Utils;
 
 import java.util.List;
 
@@ -38,6 +39,11 @@ public final class Sphere extends RoundShape<Point3D> {
 	@Override
 	protected double calcRadius(Point3D pointA, Point3D pointB) {
 		return calcDistance3D(pointA, pointB);
+	}
+
+	@Override
+	protected void copyPoints(List<Point3D> fromPoints) {
+		Utils.copyPoints3D(this.points, fromPoints);
 	}
 
 	@Override

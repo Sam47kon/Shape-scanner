@@ -5,6 +5,7 @@ import com.app.model.shape.interfaces.iTransformable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 public abstract class Shape<T extends Point> implements iTransformable<T> {
 	protected final List<T> points;
@@ -33,6 +34,14 @@ public abstract class Shape<T extends Point> implements iTransformable<T> {
 
 	public ShapeType getShapeType() {
 		return shapeType;
+	}
+
+	public String convertPointsToString() {
+		StringJoiner sj = new StringJoiner("; ");
+		for (T point : points) {
+			sj.add(point.toString());
+		}
+		return sj.toString();
 	}
 
 	@Override

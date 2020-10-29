@@ -28,7 +28,7 @@ public abstract class RoundShape<T extends Point> extends Shape<T> {
 	 */
 	public RoundShape(List<T> points) {
 		this.center = createCenter(points);
-		this.points.add(this.center);
+		copyPoints(points);
 		this.radius = calcRadius(points.get(0), points.get(1));
 	}
 
@@ -39,6 +39,8 @@ public abstract class RoundShape<T extends Point> extends Shape<T> {
 	protected abstract T createCenter(List<T> points);
 
 	protected abstract double calcRadius(T pointA, T pointB);
+
+	protected abstract void copyPoints(List<T> fromPoints);
 
 	@Override
 	public void rotate(double angle) {

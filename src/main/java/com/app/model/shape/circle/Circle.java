@@ -2,6 +2,7 @@ package com.app.model.shape.circle;
 
 import com.app.model.point.Point2D;
 import com.app.model.shape.ShapeType;
+import com.app.util.Utils;
 
 import java.util.List;
 
@@ -38,6 +39,11 @@ public final class Circle extends RoundShape<Point2D> {
 	@Override
 	protected double calcRadius(Point2D pointA, Point2D pointB) {
 		return calcDistance(pointA, pointB);
+	}
+
+	@Override
+	protected void copyPoints(List<Point2D> fromPoints) {
+		Utils.copyPoints(this.points, fromPoints);
 	}
 
 	@Override
