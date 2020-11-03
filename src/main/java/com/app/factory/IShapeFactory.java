@@ -5,6 +5,6 @@ import com.app.model.shape.Shape;
 
 import java.util.List;
 
-public interface iShapeFactory<T extends Point> {
+public interface IShapeFactory<T extends Point> {
 	Shape<T> createShape(List<T> points);
 }

@@ -21,7 +21,7 @@ public class ShapeCreateHelper {
 
 	public static TreeMap<String, Shape<Point2D>> getShapesByFile(String fileName) {
 		TreeMap<String, Shape<Point2D>> shapes = new TreeMap<>(Comparator.comparingInt(Integer::parseInt));
-		iShapeFactory<Point2D> factory;
+		IShapeFactory<Point2D> factory;
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 			String line;
 //			int lineNum = 1;
@@ -92,8 +92,8 @@ public class ShapeCreateHelper {
 		return listPoints;
 	}
 
-	public static iShapeFactory<Point2D> getShapeFactory(@NotNull List<Point2D> points) {
-		iShapeFactory<Point2D> factory;
+	public static IShapeFactory<Point2D> getShapeFactory(@NotNull List<Point2D> points) {
+		IShapeFactory<Point2D> factory;
 		switch (points.size()) {
 			case 2:
 				factory = new CircleFactory();

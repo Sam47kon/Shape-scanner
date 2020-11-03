@@ -1,13 +1,13 @@
 package com.app.model.shape;
 
 import com.app.model.point.Point;
-import com.app.model.shape.interfaces.iTransformable;
+import com.app.model.shape.interfaces.ITransformable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public abstract class Shape<T extends Point> implements iTransformable<T> {
+public abstract class Shape<T extends Point> implements ITransformable<T> {
 	protected final List<T> points;
 	protected T center;
 	protected ShapeType shapeType;

@@ -5,7 +5,7 @@ import com.app.model.shape.polygon.Polygon;
 
 import java.util.List;
 
-public class PolygonFactory implements iShapeFactory<Point2D> {
+public class PolygonFactory implements IShapeFactory<Point2D> {
 	@Override
 	public Polygon createShape(List<Point2D> points) {
 		return new Polygon(points);

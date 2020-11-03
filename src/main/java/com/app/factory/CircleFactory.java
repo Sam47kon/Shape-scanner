@@ -5,7 +5,7 @@ import com.app.model.shape.circle.Circle;
 
 import java.util.List;
 
-public class CircleFactory implements iShapeFactory<Point2D> {
+public class CircleFactory implements IShapeFactory<Point2D> {
 
 	@Override
 	public Circle createShape(List<Point2D> points) {

@@ -5,7 +5,7 @@ import com.app.model.shape.polygon.triangle.Triangle;
 
 import java.util.List;
 
-public class TriangleFactory implements iShapeFactory<Point2D> {
+public class TriangleFactory implements IShapeFactory<Point2D> {
 	@Override
 	public Triangle createShape(List<Point2D> points) {
 		return new Triangle(points);

@@ -1,7 +1,7 @@
 package com.app.model.shape.interfaces;
 
 @FunctionalInterface
-public interface iRotatable {
+public interface IRotatable {
 	/**
 	 * Повернуть на заданное число градусов, относительно центра, в необходимую сторону
 	 *

@@ -1,6 +1,6 @@
 package com.app.model.shape.interfaces;
 
-public interface iScalable {
+public interface IScalable {
 	/**
 	 * Увеличить фигуру в заданное число раз, относительно центра
 	 *
