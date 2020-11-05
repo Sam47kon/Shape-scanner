@@ -169,7 +169,7 @@ public class Menu {
 					if (!line.equals(newLine)) {
 						fileContent.set(i, newLine);
 						sb.append("Фигура в строке №").append(i + 1).append(" заменена:\nБыло:\n\t")
-								.append(line).append("\nСтало:\n\t").append(newLine);
+								.append(line).append("\nСтало:\n\t").append(newLine).append("\n");
 					}
 				} else {
 					if (ShapeCreateHelper.isShapeInLine(fileContent.get(i))) {
