@@ -2,6 +2,7 @@ package com.app.main;
 
 import com.app.helper.ShapeCreateHelper;
 
+// TODO апгрейд до rest + firebase + отрисовка фигур
 public class Main {
 	private static final String FILE_NAME = "template.txt";
 
