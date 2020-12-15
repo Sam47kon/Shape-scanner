@@ -36,6 +36,9 @@ public final class Quadrangular extends Polygon {
 		shapeType = define(side1, side2, side3, side4, angleA);
 	}
 
+	public Quadrangular() {
+	}
+
 	private static ShapeType define(double side1, double side2, double side3, double side4, double angle1) {
 		if (side1 == side2 && side2 == side3) {
 			if (angle1 == 90) {

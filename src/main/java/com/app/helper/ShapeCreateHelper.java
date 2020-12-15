@@ -24,7 +24,6 @@ public class ShapeCreateHelper {
 		IShapeFactory<Point2D> factory;
 		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 			String line;
-//			int lineNum = 1;
 			while (reader.ready()) {
 				line = reader.readLine();
 				List<Point2D> points = definePoints(line, true);

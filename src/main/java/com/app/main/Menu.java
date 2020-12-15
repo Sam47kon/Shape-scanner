@@ -4,8 +4,13 @@ import com.app.helper.ScannerHelper;
 import com.app.helper.ShapeCreateHelper;
 import com.app.model.point.Point2D;
 import com.app.model.shape.Shape;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -38,6 +43,8 @@ public class Menu {
 	}
 
 	public void start() {
+		serializeAndDeserialize();
+
 		displayText("Добро пожаловать в приложение!");
 		displayText(shapes.size() == 0
 				? "Фигуры отсутствуют"
@@ -69,6 +76,35 @@ public class Menu {
 			}
 		}
 		ScannerHelper.close();
+	}
+
+	private void serializeAndDeserialize() {
+		ShapeCollection collection = new ShapeCollection();
+		collection.shapes.addAll(shapes.values());
+		StringWriter writer = new StringWriter();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+		// Serialize
+		try {
+			mapper.writeValue(writer, collection);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String result = writer.toString();
+
+		System.out.println("result = " + result);
+
+		// Deserialize
+		try {
+			collection = mapper.readValue(result, ShapeCollection.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		for (Shape<Point2D> shape : collection.shapes) {
+			System.out.println(shape);
+		}
 	}
 
 	private void displayAllShapes() {
@@ -213,5 +249,14 @@ public class Menu {
 
 	public void displayText(String textToDisplay) {
 		System.out.println(textToDisplay);
+	}
+
+	@JsonAutoDetect
+	public static class ShapeCollection {
+		public ArrayList<Shape<Point2D>> shapes;
+
+		public ShapeCollection() {
+			this.shapes = new ArrayList<>();
+		}
 	}
 }

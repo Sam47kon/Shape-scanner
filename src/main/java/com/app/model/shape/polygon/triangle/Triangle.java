@@ -22,6 +22,9 @@ public final class Triangle extends Polygon {
 		angleC = 180 - angleA - angleB;
 	}
 
+	public Triangle() {
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + String.format(Locale.ENGLISH,

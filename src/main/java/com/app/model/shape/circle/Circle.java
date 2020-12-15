@@ -20,6 +20,9 @@ public final class Circle extends RoundShape<Point2D> {
 		this.shapeType = ShapeType.CIRCLE;
 	}
 
+	public Circle() {
+	}
+
 	/**
 	 * Площадь окружности
 	 * S = π * r^2

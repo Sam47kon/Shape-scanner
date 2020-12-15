@@ -1,13 +1,28 @@
 package com.app.model.shape;
 
 import com.app.model.point.Point;
+import com.app.model.shape.circle.Circle;
 import com.app.model.shape.interfaces.ITransformable;
+import com.app.model.shape.polygon.Polygon;
+import com.app.model.shape.polygon.quadrangular.Quadrangular;
+import com.app.model.shape.polygon.triangle.Triangle;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public abstract class Shape<T extends Point> implements ITransformable<T> {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = Circle.class, name = "Circle"),
+		@JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
+		@JsonSubTypes.Type(value = Quadrangular.class, name = "Quadrangular"),
+		@JsonSubTypes.Type(value = Triangle.class, name = "Triangle")
+})
+public abstract class Shape<T extends Point> implements ITransformable<T>, Serializable {
+	private static final long serialVersionUID = 1L;
 	protected final List<T> points;
 	protected T center;
 	protected ShapeType shapeType;
@@ -17,7 +32,7 @@ public abstract class Shape<T extends Point> implements ITransformable<T> {
 		points = new ArrayList<>();
 	}
 
-	protected Shape() {
+	public Shape() {
 	}
 
 	public Shape(List<T> points) {

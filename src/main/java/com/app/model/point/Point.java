@@ -1,8 +1,18 @@
 package com.app.model.point;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import java.io.Serializable;
 import java.util.Locale;
 
-public abstract class Point {
+@JsonAutoDetect
+@Data
+public abstract class Point implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	private long id;
 	private double x;
 	private double y;
 
@@ -11,20 +21,7 @@ public abstract class Point {
 		this.y = y;
 	}
 
-	public double getX() {
-		return x;
-	}
-
-	public void setX(double x) {
-		this.x = x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
+	public Point() {
 	}
 
 	@Override

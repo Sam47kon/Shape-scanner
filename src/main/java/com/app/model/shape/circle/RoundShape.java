@@ -32,6 +32,9 @@ public abstract class RoundShape<T extends Point> extends Shape<T> {
 		this.radius = calcRadius(points.get(0), points.get(1));
 	}
 
+	public RoundShape() {
+	}
+
 	public double getRadius() {
 		return radius;
 	}

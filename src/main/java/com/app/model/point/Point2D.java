@@ -5,6 +5,9 @@ public final class Point2D extends Point {
 		super(x, y);
 	}
 
+	public Point2D() {
+	}
+
 	@Override
 	public String toString() {
 		return "(" + super.toString() + ")";
