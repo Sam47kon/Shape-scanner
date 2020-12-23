@@ -2,11 +2,13 @@ package com.app.restapp.model.shape.circle;
 
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.shape.Shape;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 import java.util.Locale;
 
 public abstract class RoundShape extends Shape {
+	@Field("radius")
 	protected double radius;
 
 	/**

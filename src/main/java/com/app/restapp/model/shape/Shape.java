@@ -35,7 +35,7 @@ import java.util.StringJoiner;
 public abstract class Shape implements ITransformable, Serializable {
 	private static final long serialVersionUID = 1L;
 	@Field("points")
-	protected final List<Point> points;
+	protected List<Point> points;
 	@Field("center")
 	protected Point center;
 	@Field("shapeType")
@@ -72,6 +72,7 @@ public abstract class Shape implements ITransformable, Serializable {
 		}
 		return sj.toString();
 	}
+
 
 	@Override
 	public String toString() {

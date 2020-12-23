@@ -10,20 +10,20 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 @SpringBootApplication
-//@EntityScan("com.app.rest.model")
-//@EnableMongoRepositories("com.app.rest.repository")
+@EntityScan("com.app.rest.model")
+//@EnableMongoRepositories("com.app.restapp.repository")
 public class Main {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
-
 
 	private static void startFirebase() {
 		final String PATH_CREDENTIALS = "C:/Users/OTR-2000/Documents/Dok/ServiceAccountKey.json";

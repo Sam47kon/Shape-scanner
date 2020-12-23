@@ -3,34 +3,23 @@ package com.app.restapp.model.shape.polygon;
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.shape.Shape;
 import com.app.restapp.model.shape.ShapeType;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 import static com.app.util.Utils.*;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Polygon extends Shape {
-	protected double side1;
-	protected double side2;
-	protected double side3;
-	protected double angleA;
-	protected double angleB;
-	protected double angleC;
-	protected Point pointA;
-	protected Point pointB;
-	protected Point pointC;
 
-	protected Polygon() {
+	public Polygon() {
 	}
 
 	public Polygon(List<Point> points) {
 		copyPoints(this.points, points);
 		center = calcMidPoint(this.points);
-		this.pointA = this.points.get(0);
-		this.pointB = this.points.get(1);
-		this.pointC = this.points.get(2);
-
-		this.side1 = calcDistance(pointA, pointB);
-		this.side2 = calcDistance(pointB, pointC);
 		shapeType = ShapeType.POLYGON;
 	}
 
@@ -69,13 +58,15 @@ public class Polygon extends Shape {
 	public void increase(double factor) {
 		scaleShape(points, center, factor);
 		area = calcArea();
-		side1 *= factor;
-		side2 *= factor;
-		side3 *= factor;
 	}
 
 	@Override
 	public void reduce(double factor) {
 		increase(1 / factor);
+	}
+
+	@Override
+	public String toString() {
+		return super.toString();
 	}
 }

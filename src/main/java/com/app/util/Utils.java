@@ -3,6 +3,7 @@ package com.app.util;
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.point.Point2D;
 import com.app.restapp.model.point.Point3D;
+import com.app.restapp.model.shape.ShapeType;
 import com.sun.istack.internal.NotNull;
 
 import java.util.List;
@@ -199,7 +200,38 @@ public final class Utils {
 		}
 	}
 
-	// getRuntime(() -> МЕТОД())
+	/**
+	 * Определяет тип четырехугольника
+	 *
+	 * @param points - лист с точками
+	 * @return тип четырехугольника
+	 */
+	public static ShapeType define(List<Point> points) {
+		if (points.size() != 4) {
+			throw new RuntimeException("Это не четырех угольник! Всего точек:" + points.size());
+		}
+		Point pointA = points.get(0);
+		Point pointB = points.get(1);
+		Point pointC = points.get(2);
+		Point pointD = points.get(3);
+		double angleA = calcAngle(pointA, pointB, pointD);
+		double side1 = calcDistance(pointA, pointB);
+		double side2 = calcDistance(pointB, pointC);
+		double side3 = calcDistance(pointC, pointD);
+		double side4 = calcDistance(pointD, pointA);
+
+		if (side1 == side2 && side2 == side3) {
+			if (angleA == 90) {
+				return ShapeType.SQUARE;
+			} else return ShapeType.RHOMBUS;
+		}
+		if (side1 == side3 && side2 == side4) {
+			if (angleA == 90) {
+				return ShapeType.RECTANGLE;
+			} else return ShapeType.PARALLELOGRAM;
+		}
+		return ShapeType.QUADRANGULAR;
+	}
 
 	/**
 	 * Метод позволяет получить время выполнения метода/блока кода

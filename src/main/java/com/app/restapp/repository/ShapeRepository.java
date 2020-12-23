@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "shapes", path = "shapes")
-public interface ShapeRepository extends MongoRepository<Shape, Long> {
+public interface ShapeRepository extends MongoRepository<Shape, String> {
 
 	@Query("{ 'shapeType' : ?0 ")
 	List<Shape> findShapesByShapeType(String shapeType);

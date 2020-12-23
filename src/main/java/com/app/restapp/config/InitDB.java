@@ -2,18 +2,17 @@ package com.app.restapp.config;
 
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.point.Point2D;
+import com.app.restapp.model.shape.Shape;
 import com.app.restapp.model.shape.polygon.Polygon;
-import com.app.restapp.repository.PointRepository;
-import com.app.restapp.repository.ShapeRepository;
+import com.app.restapp.model.shape.polygon.quadrangular.Quadrangular;
+import com.app.restapp.service.ShapeService;
 import com.mongodb.client.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,14 +22,11 @@ import static com.app.util.Utils.getRuntime;
 @Configuration
 public class InitDB implements CommandLineRunner {
 
-	private final PointRepository pointRepository;
-	private final ShapeRepository shapeRepository;
-
+	private final ShapeService shapeService;
 
 	@Autowired
-	public InitDB(PointRepository pointRepository, ShapeRepository shapeRepository) {
-		this.pointRepository = pointRepository;
-		this.shapeRepository = shapeRepository;
+	public InitDB(ShapeService shapeService) {
+		this.shapeService = shapeService;
 	}
 
 	private static void testConnectionDB() {
@@ -58,33 +54,36 @@ public class InitDB implements CommandLineRunner {
 
 	}
 
+	// TODO перенести это в тесты
 	@Override
 	public void run(String... args) throws Exception {
-		// init 5 Points
-		log.info("Start pointRepository.deleteAll(): " + getRuntime(pointRepository::deleteAll) + "ms");
-
-		log.info("Start pointRepository.save 5 points: " + getRuntime(() -> {
-			for (int i = 0; i < 5; i++) {
-				pointRepository.save(new Point2D(i, i + 2));
-			}
-		}) + "ms");
-
-		log.info("Start pointRepository.findAll(): " + getRuntime(pointRepository::findAll) + "ms");
-		List<Point> points = pointRepository.findAll();
-		points.stream().map(point -> "id: " + point.getId() + " " + point).forEach(System.out::println);
-
+		List<Point> points = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			points.add(new Point2D(i, i + 2));
+		}
 
 		// init 5 shapes
-		log.info("Start shapeRepository.deleteAll(): " + getRuntime(shapeRepository::deleteAll) + "ms");
+		log.info("Start shapeRepository.deleteAll(): " + getRuntime(shapeService::deleteAll) + "ms");
 
 		log.info("Start shapeRepository.save 5 shapes: " + getRuntime(() -> {
 			for (long i = 0; i < 5; i++) {
-				shapeRepository.save(new Polygon(points));
+				shapeService.insert(new Polygon(points));
 			}
 		}) + "ms");
 
-		// FIXME Cannot set property points because no setter, no wither and it's not part of the persistence constructor protected
-		log.info("Start shapeRepository.findAll(): " + getRuntime(shapeRepository::findAll) + "ms");
-		shapeRepository.findAll().stream().map(shape -> "id: " + shape.getId() + " " + shape).forEach(System.out::println);
+		// (8, 0); (9, 2); (1, 6); (0, 4) - Прямоугольник
+		shapeService.insert(new Quadrangular(Arrays.asList(
+				new Point2D(8, 0),
+				new Point2D(9, 2),
+				new Point2D(1, 6),
+				new Point2D(0, 4)
+		)));
+
+		log.info("Start shapeRepository.findAll(): " + getRuntime(shapeService::getAll) + "ms");
+		List<Shape> shapes = shapeService.getAll();
+		shapes.stream().map(shape -> "id: " + shape.getId() + " " + shape).forEach(System.out::println);
+
+//		log.info("shapeService.deleteById(shapes.get(0).getId()): ");
+//		shapeService.deleteById(shapes.get(0).getId());
 	}
 }

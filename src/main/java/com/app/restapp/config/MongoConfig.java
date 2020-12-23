@@ -1,6 +1,8 @@
 package com.app.restapp.config;
 
 import com.app.restapp.converter.PointWriterConverter;
+import com.app.restapp.converter.PolygonWriterConverter;
+import com.app.restapp.converter.ShapeWriterConverter;
 import com.app.restapp.event.CascadeSaveMongoEventListener;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -11,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
@@ -31,6 +35,16 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
 	private final MappingMongoConverter mongoConverter;
 
+	/**
+	 * Аннотация @Lazy потому что:
+	 * The dependencies of some of the beans in the application context form a cycle:
+	 * initDB defined in file ... InitDB.class
+	 * shapeServiceImpl defined in file ... ShapeServiceImpl.class
+	 * shapeRepository defined in ... ShapeRepository defined in @EnableMongoRepositories declared on MongoConfig
+	 * mongoConfig defined in file ... MongoConfig.class
+	 *
+	 * @param mongoConverter - @Autowired
+	 */
 	@Autowired
 	public MongoConfig(@Lazy MappingMongoConverter mongoConverter) {
 		this.mongoConverter = mongoConverter;
@@ -65,7 +79,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Override
 	public MongoCustomConversions customConversions() {
 		converters.add(new PointWriterConverter());
-		// TODO добавить остальные конвертеры
+		converters.add(new ShapeWriterConverter());
+		converters.add(new PolygonWriterConverter());
+		// TODO нужны ли конвертеры для подклассов?
 		return new MongoCustomConversions(converters);
 	}
 
@@ -75,8 +91,8 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	}
 
 	// TODO для тестов
-//	@Bean
-//	public MongoTransactionManager transactionManager(MongoDatabaseFactory databaseFactory) {
-//		return new MongoTransactionManager(databaseFactory);
-//	}
+	@Bean
+	public MongoTransactionManager transactionManager(MongoDatabaseFactory databaseFactory) {
+		return new MongoTransactionManager(databaseFactory);
+	}
 }

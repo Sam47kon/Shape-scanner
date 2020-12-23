@@ -53,4 +53,9 @@ public final class Circle extends RoundShape {
 	public void move(Point point) {
 		movePointByPoint(center, point);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

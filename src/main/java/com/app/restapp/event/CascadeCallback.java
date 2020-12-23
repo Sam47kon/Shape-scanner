@@ -10,8 +10,8 @@ import java.lang.reflect.Field;
 @SuppressWarnings("NullableProblems")
 public class CascadeCallback implements ReflectionUtils.FieldCallback {
 
-	private Object source;
-	private MongoOperations mongoOperations;
+	private final Object source;
+	private final MongoOperations mongoOperations;
 
 	public CascadeCallback(final Object source, final MongoOperations mongoOperations) {
 		this.source = source;

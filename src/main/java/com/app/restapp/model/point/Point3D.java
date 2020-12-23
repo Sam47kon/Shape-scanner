@@ -1,8 +1,11 @@
 package com.app.restapp.model.point;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Locale;
 
 public final class Point3D extends Point {
+	@Field(name = "z")
 	private double z;
 
 	public Point3D(double x, double y, double z) {

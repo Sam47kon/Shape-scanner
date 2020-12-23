@@ -50,4 +50,9 @@ public final class Sphere extends RoundShape {
 	public void move(Point point) {
 		movePointByPoint3D(center, point);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

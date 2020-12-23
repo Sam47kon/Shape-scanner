@@ -11,7 +11,7 @@ public class FieldCallback implements ReflectionUtils.FieldCallback {
 	private boolean idFound;
 
 	@Override
-	public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
+	public void doWith(Field field) throws IllegalArgumentException {
 		ReflectionUtils.makeAccessible(field);
 
 		if (field.isAnnotationPresent(Id.class)) {
