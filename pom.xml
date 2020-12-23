@@ -23,6 +23,7 @@
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
         <maven-compiler-plugin.target>1.8</maven-compiler-plugin.target>
+        <querydsl.version>4.3.1</querydsl.version>
     </properties>
 
     <dependencies>
@@ -44,6 +45,11 @@
             <version>7.0.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
