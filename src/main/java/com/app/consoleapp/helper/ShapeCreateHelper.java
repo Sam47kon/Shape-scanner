@@ -4,6 +4,7 @@ import com.app.consoleapp.factory.*;
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.point.Point2D;
 import com.app.restapp.model.shape.Shape;
+import com.app.restapp.model.shape.ShapeType;
 import com.sun.istack.internal.NotNull;
 
 import java.io.BufferedReader;
@@ -106,6 +107,29 @@ public class ShapeCreateHelper {
 				break;
 			default:
 				factory = new PolygonFactory();
+		}
+		return factory;
+	}
+
+	public static IShapeFactory getShapeFactory(ShapeType shapeType) {
+		IShapeFactory factory;
+		switch (shapeType) {
+			case QUADRANGULAR:
+			case SQUARE:
+			case RHOMBUS:
+			case RECTANGLE:
+			case PARALLELOGRAM:
+				factory = new QuadrangularFactory();
+				break;
+			case CIRCLE:
+				factory = new CircleFactory();
+				break;
+			case TRIANGLE:
+				factory = new TriangleFactory();
+				break;
+			default:
+				factory = new PolygonFactory();
+				break;
 		}
 		return factory;
 	}

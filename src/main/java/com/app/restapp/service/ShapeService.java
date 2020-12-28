@@ -2,20 +2,13 @@ package com.app.restapp.service;
 
 import com.app.restapp.model.shape.Shape;
 
-import java.util.List;
+public interface ShapeService extends ShapeServiceRest {
 
-public interface ShapeService {
-	Shape getById(String id);
+	Shape rotateShape(String id, double angle);
 
-	List<Shape> getAll();
+	Shape moveShape(String id, double x, double y);
 
-	Shape insert(Shape shape);
+	Shape increase(String id, double scale);
 
-	Shape update(Shape updatedShape, String id);
-
-	void delete(Shape shape);
-
-	boolean deleteById(String id);
-
-	void deleteAll();
+	Shape reduce(String id, double scale);
 }

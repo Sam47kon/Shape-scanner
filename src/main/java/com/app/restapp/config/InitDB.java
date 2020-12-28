@@ -31,8 +31,7 @@ public class InitDB implements CommandLineRunner {
 
 	private static void testConnectionDB() {
 		Logger.getLogger("org.mongodb.").setLevel(Level.WARNING);
-		String uri = "mongodb+srv://Sam47kon:4747@cluster0.isrzl.mongodb.net/shape-app?retryWrites=true&w=majority";
-		try (MongoClient mongoClient = MongoClients.create(uri)) {
+		try (MongoClient mongoClient = MongoClients.create(MongoConfig.URI)) {
 			MongoIterable<String> strings = mongoClient.listDatabaseNames();
 			MongoCursor<String> cursor = strings.cursor();
 			Map<String, MongoDatabase> mongoDatabases = new HashMap<>();
@@ -50,40 +49,54 @@ public class InitDB implements CommandLineRunner {
 			// Нужная БД
 			MongoDatabase shapeDB = mongoDatabases.get("shape-app");
 		}
-
-
 	}
 
 	// TODO перенести это в тесты
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
+		shapeService.deleteAll();
+//		createShapes();
+		testActions();
+//		getAllShapes();
+	}
+
+	private void testActions() {
+		// (8, 0); (9, 2); (1, 6); (0, 4) - Прямоугольник
+		Shape shape = shapeService.insert(new Quadrangular(Arrays.asList(
+				new Point2D(8, 0),
+				new Point2D(9, 2),
+				new Point2D(1, 6),
+				new Point2D(0, 4)
+		)));
+		System.out.println(shape);
+
+		System.out.println("rotateShape:\n" + shapeService.rotateShape(shape.getId(), 90));
+		System.out.println("rotateShape:\n" + shapeService.rotateShape(shape.getId(), -90));
+
+		System.out.println("moveShape:\n" + shapeService.moveShape(shape.getId(), 10, 10));
+		System.out.println("moveShape:\n" + shapeService.moveShape(shape.getId(), -10, -10));
+
+		System.out.println("increase:\n" + shapeService.increase(shape.getId(), 5));
+		System.out.println("reduce:\n" + shapeService.reduce(shape.getId(), 5));
+	}
+
+	private void getAllShapes() {
+		log.info("Start shapeRepository.findAll(): " + getRuntime(shapeService::getAll) + "ms");
+		List<Shape> shapes = shapeService.getAll();
+		shapes.stream().map(shape -> "id: " + shape.getId() + " " + shape).forEach(System.out::println);
+	}
+
+	private void createShapes() {
 		List<Point> points = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {
 			points.add(new Point2D(i, i + 2));
 		}
 
 		// init 5 shapes
-		log.info("Start shapeRepository.deleteAll(): " + getRuntime(shapeService::deleteAll) + "ms");
-
 		log.info("Start shapeRepository.save 5 shapes: " + getRuntime(() -> {
 			for (long i = 0; i < 5; i++) {
 				shapeService.insert(new Polygon(points));
 			}
 		}) + "ms");
-
-		// (8, 0); (9, 2); (1, 6); (0, 4) - Прямоугольник
-		shapeService.insert(new Quadrangular(Arrays.asList(
-				new Point2D(8, 0),
-				new Point2D(9, 2),
-				new Point2D(1, 6),
-				new Point2D(0, 4)
-		)));
-
-		log.info("Start shapeRepository.findAll(): " + getRuntime(shapeService::getAll) + "ms");
-		List<Shape> shapes = shapeService.getAll();
-		shapes.stream().map(shape -> "id: " + shape.getId() + " " + shape).forEach(System.out::println);
-
-//		log.info("shapeService.deleteById(shapes.get(0).getId()): ");
-//		shapeService.deleteById(shapes.get(0).getId());
 	}
 }

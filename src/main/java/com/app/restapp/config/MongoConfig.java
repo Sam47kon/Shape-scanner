@@ -1,7 +1,7 @@
 package com.app.restapp.config;
 
 import com.app.restapp.converter.PointWriterConverter;
-import com.app.restapp.converter.PolygonWriterConverter;
+import com.app.restapp.converter.ShapeReadConverter;
 import com.app.restapp.converter.ShapeWriterConverter;
 import com.app.restapp.event.CascadeSaveMongoEventListener;
 import com.mongodb.ConnectionString;
@@ -9,6 +9,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -30,6 +31,8 @@ import java.util.List;
 @EnableMongoRepositories(basePackages = "com.app.restapp.repository")
 @SuppressWarnings("NullableProblems")
 public class MongoConfig extends AbstractMongoClientConfiguration {
+
+	public static final String URI = "mongodb+srv://Sam47kon:4747@cluster0.isrzl.mongodb.net/shape-app?retryWrites=true&w=majority";
 
 	private final List<Converter<?, ?>> converters = new ArrayList<>();
 
@@ -58,8 +61,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	@Override
 	public MongoClient mongoClient() {
 		return MongoClients.create(MongoClientSettings.builder()
-				.applyConnectionString(
-						new ConnectionString("mongodb+srv://Sam47kon:4747@cluster0.isrzl.mongodb.net/shape-app?retryWrites=true&w=majority"))
+				.applyConnectionString(new ConnectionString(URI))
 				.build());
 	}
 
@@ -80,7 +82,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	public MongoCustomConversions customConversions() {
 		converters.add(new PointWriterConverter());
 		converters.add(new ShapeWriterConverter());
-		converters.add(new PolygonWriterConverter());
+		converters.add(new ShapeReadConverter());
 		// TODO нужны ли конвертеры для подклассов?
 		return new MongoCustomConversions(converters);
 	}
@@ -92,7 +94,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
 	// TODO для тестов
 	@Bean
-	public MongoTransactionManager transactionManager(MongoDatabaseFactory databaseFactory) {
+	public MongoTransactionManager transactionManager(@Qualifier("mongoDbFactory") MongoDatabaseFactory databaseFactory) {
 		return new MongoTransactionManager(databaseFactory);
 	}
 }
