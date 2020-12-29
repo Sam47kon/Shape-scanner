@@ -35,11 +35,12 @@ public class ShapeServiceImpl implements ShapeService {
 		return shapeRepository.save(shape);
 	}
 
-	@Override
-	public Shape update(Shape updatedShape, String id) {
+	@Override // FIXME айдейт
+	public Shape update(String id, Shape updatedShape) {
+		System.out.println("вызов апдейта");
 		return shapeRepository.findById(id).map(shape -> {
-			updatedShape.setId(shape.getId());
-			shape = updatedShape;
+			shape.update(updatedShape);
+			System.out.println("вызов сохранение");
 			return shapeRepository.save(shape);
 		}).orElseThrow(() -> new ShapeNotFoundException(id));
 	}

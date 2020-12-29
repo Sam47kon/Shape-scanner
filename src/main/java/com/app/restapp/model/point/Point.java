@@ -1,21 +1,22 @@
 package com.app.restapp.model.point;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.io.Serializable;
 import java.util.Locale;
 
-@JsonAutoDetect
+//@JsonAutoDetect
+//@JsonSubTypes({
+//		@JsonSubTypes.Type(value = Point2D.class),
+//		@JsonSubTypes.Type(value = Point3D.class)
+//})
 @Document(collection = "points")
 @Data
-public abstract class Point implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	private String id;
+public abstract class Point
+//		implements Serializable
+{
+//	private static final long serialVersionUID = 1L;
 	@Field(name = "x")
 	private double x;
 	@Field(name = "y")

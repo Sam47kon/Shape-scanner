@@ -1,9 +1,8 @@
 package com.app.restapp.config;
 
-import com.app.restapp.model.point.Point;
+import com.app.consoleapp.helper.ShapeCreateHelper;
 import com.app.restapp.model.point.Point2D;
 import com.app.restapp.model.shape.Shape;
-import com.app.restapp.model.shape.polygon.Polygon;
 import com.app.restapp.model.shape.polygon.quadrangular.Quadrangular;
 import com.app.restapp.service.ShapeService;
 import com.mongodb.client.*;
@@ -16,6 +15,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.app.consoleapp.main.ConsoleApp.FILE_NAME;
 import static com.app.util.Utils.getRuntime;
 
 @Slf4j
@@ -55,9 +55,16 @@ public class InitDB implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		shapeService.deleteAll();
-//		createShapes();
-		testActions();
-//		getAllShapes();
+		createShapes();
+//		testActions();
+		getAllShapes();
+	}
+
+	private void createShapes() {
+		List<Shape> shapes = new ArrayList<>(ShapeCreateHelper.getShapesByFile(FILE_NAME).values());
+		for (Shape shape : shapes) {
+			shapeService.insert(shape);
+		}
 	}
 
 	private void testActions() {
@@ -84,19 +91,5 @@ public class InitDB implements CommandLineRunner {
 		log.info("Start shapeRepository.findAll(): " + getRuntime(shapeService::getAll) + "ms");
 		List<Shape> shapes = shapeService.getAll();
 		shapes.stream().map(shape -> "id: " + shape.getId() + " " + shape).forEach(System.out::println);
-	}
-
-	private void createShapes() {
-		List<Point> points = new ArrayList<>();
-		for (int i = 0; i < 4; i++) {
-			points.add(new Point2D(i, i + 2));
-		}
-
-		// init 5 shapes
-		log.info("Start shapeRepository.save 5 shapes: " + getRuntime(() -> {
-			for (long i = 0; i < 5; i++) {
-				shapeService.insert(new Polygon(points));
-			}
-		}) + "ms");
 	}
 }

@@ -1,6 +1,5 @@
 package com.app.restapp.config;
 
-import com.app.restapp.converter.PointWriterConverter;
 import com.app.restapp.converter.ShapeReadConverter;
 import com.app.restapp.converter.ShapeWriterConverter;
 import com.app.restapp.event.CascadeSaveMongoEventListener;
@@ -80,7 +79,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
 	@Override
 	public MongoCustomConversions customConversions() {
-		converters.add(new PointWriterConverter());
 		converters.add(new ShapeWriterConverter());
 		converters.add(new ShapeReadConverter());
 		// TODO нужны ли конвертеры для подклассов?
