@@ -1,7 +1,14 @@
 package com.app.restapp.model.shape;
 
 import com.app.restapp.model.point.Point;
+import com.app.restapp.model.shape.circle.Circle;
 import com.app.restapp.model.shape.interfaces.ITransformable;
+import com.app.restapp.model.shape.polygon.Polygon;
+import com.app.restapp.model.shape.polygon.quadrangular.Quadrangular;
+import com.app.restapp.model.shape.polygon.triangle.Triangle;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -11,26 +18,24 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static com.app.util.Utils.calcMidPoint;
-
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-//@JsonSubTypes({
-//		@JsonSubTypes.Type(value = Circle.class, name = "Circle"),
-//		@JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
-//		@JsonSubTypes.Type(value = Quadrangular.class, name = "Quadrangular"),
-//		@JsonSubTypes.Type(value = Triangle.class, name = "Triangle")
-//})
+@JsonAutoDetect
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = Circle.class, name = "Circle"),
+		@JsonSubTypes.Type(value = Polygon.class, name = "Polygon"),
+		@JsonSubTypes.Type(value = Quadrangular.class, name = "Quadrangular"),
+		@JsonSubTypes.Type(value = Triangle.class, name = "Triangle")
+})
 @Document(collection = "shapes")
 @QueryEntity
 @Data
-public abstract class Shape implements ITransformable
-//		, Serializable
-{
-//	private static final long serialVersionUID = 1L;
+public abstract class Shape implements ITransformable, Serializable {
+	private static final long serialVersionUID = 1L;
 	@Field("points")
 	protected List<Point> points;
 	@Field("center")
@@ -70,16 +75,9 @@ public abstract class Shape implements ITransformable
 		return sj.toString();
 	}
 
-	// TODO сделать абстрактным
-	public void update(Shape shape) {
-		this.points = shape.getPoints();
-		this.calcArea();
-		this.center = calcMidPoint(this.points);
-	}
-
-
 	@Override
 	public String toString() {
 		return shapeType.toString() + "\n\tКоординаты: " + points + " Центральная точка: " + center;
 	}
 }
+

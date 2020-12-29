@@ -51,16 +51,16 @@ public class InitDB implements CommandLineRunner {
 		}
 	}
 
-	// TODO перенести это в тесты
+	// TODO перенести это в тесты, если буду делать
 	@Override
 	public void run(String... args) {
-		shapeService.deleteAll();
-		createShapes();
+//		createShapes();
 //		testActions();
 		getAllShapes();
 	}
 
 	private void createShapes() {
+		shapeService.deleteAll();
 		List<Shape> shapes = new ArrayList<>(ShapeCreateHelper.getShapesByFile(FILE_NAME).values());
 		for (Shape shape : shapes) {
 			shapeService.insert(shape);

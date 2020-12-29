@@ -6,7 +6,7 @@ import com.mongodb.DBObject;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-// TODO почему не удаляется _class!? по дебагу customConversions вызывается, но convert нет
+// TODO для тестов
 @Component
 public class ShapeWriterConverter implements Converter<Shape, DBObject> {
 

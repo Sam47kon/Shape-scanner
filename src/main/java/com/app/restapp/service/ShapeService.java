@@ -14,9 +14,7 @@ public interface ShapeService {
 
 	Shape update(String id, Shape updatedShape);
 
-	void delete(Shape shape);
-
-	boolean deleteById(String id);
+	void deleteById(String id);
 
 	void deleteAll();
 

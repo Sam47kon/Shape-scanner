@@ -70,7 +70,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	}
 
 	// @Bean
-	// public TODO нужны ли листенеры?
+	// public TODO нужны ли листенеры? upd для тестов, если буду делать
 
 	@Bean
 	public CascadeSaveMongoEventListener cascadeSaveMongoEventListener() {
@@ -81,7 +81,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 	public MongoCustomConversions customConversions() {
 		converters.add(new ShapeWriterConverter());
 		converters.add(new ShapeReadConverter());
-		// TODO нужны ли конвертеры для подклассов?
 		return new MongoCustomConversions(converters);
 	}
 
@@ -90,7 +89,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 		return new GridFsTemplate(mongoDbFactory(), mongoConverter);
 	}
 
-	// TODO для тестов
+	// TODO INFO для тестов
 	@Bean
 	public MongoTransactionManager transactionManager(@Qualifier("mongoDbFactory") MongoDatabaseFactory databaseFactory) {
 		return new MongoTransactionManager(databaseFactory);

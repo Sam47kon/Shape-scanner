@@ -10,7 +10,7 @@ import org.bson.Document;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-// TODO нужно ли мне это?
+// TODO для тестов
 @Slf4j
 @Component
 public class ShapeReadConverter implements Converter<DBObject, Shape> {
