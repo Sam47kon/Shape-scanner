@@ -48,10 +48,27 @@ public class ShapeController {
 		return ResponseEntity.accepted().body(shapeService.update(id, shape));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<Shape> rotateShape(@PathVariable String id, @RequestBody double angle) {
-		return ResponseEntity.accepted().body(shapeService.rotateShape(id, angle));
-	}
-
-	// TODO доделать 3 действия с сервиса
+//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
+//	@PutMapping("/{id}")
+//	public ResponseEntity<Shape> rotateShape(@PathVariable String id, @RequestBody double angle) {
+//		return ResponseEntity.accepted().body(shapeService.rotateShape(id, angle));
+//	}
+//
+//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
+//	@PutMapping("/{id}")
+//	public ResponseEntity<Shape> moveShape(@PathVariable String id, @RequestBody double x, @RequestBody double y) {
+//		return ResponseEntity.accepted().body(shapeService.moveShape(id, x, y));
+//	}
+//
+//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
+//	@PutMapping("/{id}")
+//	public ResponseEntity<Shape> increaseShape(@PathVariable String id, @RequestBody double scale) {
+//		return ResponseEntity.accepted().body(shapeService.increase(id, scale));
+//	}
+//
+//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
+//	@PutMapping("/{id}")
+//	public ResponseEntity<Shape> reduceShape(@PathVariable String id, @RequestBody double scale) {
+//		return ResponseEntity.accepted().body(shapeService.reduce(id, scale));
+//	}
 }
