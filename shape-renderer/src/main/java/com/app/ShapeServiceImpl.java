@@ -8,13 +8,18 @@ public class ShapeServiceImpl implements ShapeService {
 
 	private static int id = 1;
 	private List<Shape> shapes;
+	public static Shape shape = new Shape(String.valueOf(id++),
+			Arrays.asList(new Point(-2, 1), new Point(1, 1),
+					new Point(1, -2), new Point(-2, -2)),
+			null, "Квадрат");
+	public static Shape shape2 = new Shape(String.valueOf(id++),
+			Arrays.asList(new Point(-2, 1), new Point(1, 1),
+					new Point(1, -2), new Point(-2, -2)),
+			null, "Квадрат 2");
 
 	public ShapeServiceImpl() {
 		shapes = new ArrayList<>();
-		shapes.add(new Shape(String.valueOf(id++),
-				Arrays.asList(new Point(-2, 1), new Point(1, 1),
-						new Point(1, -2), new Point(-2, -2)),
-				null, "Квадрат"));
+		shapes.add(shape);
 	}
 
 	@Override
