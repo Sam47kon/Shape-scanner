@@ -12,7 +12,7 @@
             <listheader label="Фигура"/>
             <listheader label="Центр"/>
         </listhead>
-        <template name="model">
+        <template name="shape">
             <listitem>
                 <listcell label="@init(each.id)"></listcell>
                 <listcell label="@init(each.shapeType)"></listcell>

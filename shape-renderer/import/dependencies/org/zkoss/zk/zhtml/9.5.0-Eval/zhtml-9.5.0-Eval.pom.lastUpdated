@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jan 26 14:11:00 MSK 2021
+https\://mavensync.zkoss.org/maven2/.error=Could not transfer artifact org.zkoss.zk\:zhtml\:pom\:9.5.0-Eval from/to ZK CE (https\://mavensync.zkoss.org/maven2)\: Transfer failed for https\://mavensync.zkoss.org/maven2/org/zkoss/zk/zhtml/9.5.0-Eval/zhtml-9.5.0-Eval.pom
+https\://mavensync.zkoss.org/eval/.error=Could not transfer artifact org.zkoss.zk\:zhtml\:pom\:9.5.0-Eval from/to ZK EVAL (https\://mavensync.zkoss.org/eval)\: Transfer failed for https\://mavensync.zkoss.org/eval/org/zkoss/zk/zhtml/9.5.0-Eval/zhtml-9.5.0-Eval.pom
+@default-ZK\ EVAL-https\://mavensync.zkoss.org/eval/.lastUpdated=1611659460675
+@default-ZK\ CE-https\://mavensync.zkoss.org/maven2/.lastUpdated=1611659460204
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1611659460818
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.zkoss.zk\:zhtml\:pom\:9.5.0-Eval from/to central (https\://repo.maven.apache.org/maven2)\: Transfer failed for https\://repo.maven.apache.org/maven2/org/zkoss/zk/zhtml/9.5.0-Eval/zhtml-9.5.0-Eval.pom

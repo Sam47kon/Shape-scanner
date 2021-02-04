@@ -1,0 +1,8 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Jan 21 14:36:29 MSK 2021
+http\://mavensync.zkoss.org/maven2/.error=Could not transfer artifact org.zkoss.graphics\:graphics\:pom\:0.8.0.FL.20130506 from/to ZK CE (http\://mavensync.zkoss.org/maven2)\: Authorization failed for http\://mavensync.zkoss.org/maven2/org/zkoss/graphics/graphics/0.8.0.FL.20130506/graphics-0.8.0.FL.20130506.pom 403 Forbidden
+https\://repo.maven.apache.org/maven2/.lastUpdated=1611228989864
+http\://mavensync.zkoss.org/eval/.error=
+http\://mavensync.zkoss.org/eval/.lastUpdated=1611228989205
+https\://repo.maven.apache.org/maven2/.error=
+@default-ZK\ CE-http\://mavensync.zkoss.org/maven2/.lastUpdated=1611228988739

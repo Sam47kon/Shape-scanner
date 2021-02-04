@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.zkoss.zk</groupId>
+        <artifactId>zk-parent</artifactId>
+        <version>9.5.0-Eval</version>
+        <relativePath>../../zk/zk-parent/pom.xml</relativePath>
+    </parent>
+    <artifactId>zkcml-parent</artifactId>
+    <packaging>pom</packaging>
+    <name>ZKCML Parent POM</name>
+    <url>https://www.zkoss.org/</url>
+    <description>ZKCML Parent POM Module</description>
+    <properties>
+        <zk.directory>${project.basedir}/../../zk</zk.directory><!-- zk folder -->
+    </properties>
+    <modules>
+        <module>../zkex</module>
+        <module>../zkmax</module>
+        <module>../zml</module>
+        <module>../zuti</module>
+        <module>../za11y</module>
+    </modules>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <configuration>
+                        <workingDirectory>${zk.directory}</workingDirectory>
+                        <executable>npx</executable>
+                        <arguments>
+                            <argument>zklessc</argument>
+                            <argument>--imports</argument>
+                            <argument>${zk.directory}/zul/src/archive/web</argument>
+                            <argument>--source</argument>
+                            <argument>${project.basedir}/src/archive/web</argument>
+                            <argument>--output</argument>
+                            <argument>${project.build.outputDirectory}/web</argument>
+                            <argument>--compress</argument>
+                        </arguments>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <configuration>
+                        <workingDirectory>${zk.directory}</workingDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <suppressionFile>${zk.directory}/owasp-suppressions.xml</suppressionFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/bundle.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

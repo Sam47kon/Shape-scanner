@@ -16,6 +16,7 @@ public class Shape {
 	}
 
 	public Shape(String id, List<Point> points, Point center, String shapeType) {
+		this.id = id;
 		this.points = points;
 		this.center = center;
 		this.shapeType = shapeType;
