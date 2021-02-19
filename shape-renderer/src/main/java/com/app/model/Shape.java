@@ -1,4 +1,4 @@
-package com.app;
+package com.app.model;
 
 import lombok.Data;
 
@@ -8,14 +8,14 @@ import java.util.List;
 public class Shape {
 
 	private String id;
-	private String shapeType;
+	private ShapeType shapeType;
 	private Point center;
 	private List<Point> points;
 
 	public Shape() {
 	}
 
-	public Shape(String id, List<Point> points, Point center, String shapeType) {
+	public Shape(String id, List<Point> points, Point center, ShapeType shapeType) {
 		this.id = id;
 		this.points = points;
 		this.center = center;

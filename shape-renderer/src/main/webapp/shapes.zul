@@ -1,28 +1,41 @@
-<window title="Фигуры" width="1000px" border="normal" onOK="@command('search')"
-        viewModel="@id('vm') @init('com.app.SearchShapeViewModel')">
-    <div>
-        Поиск фигур:
-        <textbox placeholder="Введите текст..." value="@save(vm.keyword)"/>
-        <button label="Поиск"  onClick="@command('search')"/>
-    </div>
-    <listbox model="@init(vm.shapes)" emptyMessage="Нет фигур по запросу" rows="4"
-             selectedItem="@save(vm.selectedShape)">
-        <listhead sizable="true">
-            <listheader label="Айди"/>
-            <listheader label="Фигура"/>
-            <listheader label="Центр"/>
-        </listhead>
-        <template name="shape">
-            <listitem>
-                <listcell label="@init(each.id)"></listcell>
-                <listcell label="@init(each.shapeType)"></listcell>
-                <listcell label="@init(each.center)"></listcell>
-            </listitem>
-        </template>
-    </listbox>
-    <hlayout style="margin-top:20px" width="100%">
-        <vlayout hflex="1">
-            <label value="@load(vm.selectedShape.points)"/>
-        </vlayout>
-    </hlayout>
-</window>
+<zk>
+    <window title="Фигуры" width="1500px" border="normal" onOK="@command('search')"
+            viewModel="@id('vm') @init('com.app.mvvm.ShapeViewModel')">
+        <div>
+            <html>
+                <h2>Поиск фигур:</h2>
+            </html>
+            <textbox placeholder="Введите текст..." value="@bind(vm.keyword)"/>
+            <button label="Поиск" onClick="@command('search'); hideActions()"/>
+        </div>
+        <div>
+            <listbox model="@init(vm.shapes)" emptyMessage="Нет фигур по запросу" rows="10"
+                     selectedItem="@save(vm.selectedShape)" id="tableShapes">
+                <listhead sizable="true">
+                    <listheader label="Айди" width="20%"/>
+                    <listheader label="Фигура" width="40%"/>
+                    <listheader label="Центр" width="40%"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="@init(each.id)"/>
+                        <listcell label="@init(each.shapeType)"/>
+                        <listcell label="@init(each.center)"/>
+                    </listitem>
+                </template>
+            </listbox>
+            <hlayout style="margin-top:20px" width="100%">
+                <vlayout hflex="1">
+                    <label value="@load(vm.selectedShape.points)"/>
+                </vlayout>
+            </hlayout>
+        </div>
+        <div id="actions" visible="visible">
+            <html>
+                <h2>Действия с выбранной фигурой</h2>
+            </html>
+        </div>
+        <div></div>
+    </window>
+    <script src="/js/functions.js"/>
+</zk>

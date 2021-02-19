@@ -10,6 +10,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "shapes", path = "shapes")
 public interface ShapeRepository extends MongoRepository<Shape, String> {
 
+	// TODO реализовать в сервисе, добавить в контроллер и поменять в сервисе ui вместо findAll - findByShapeType
 	@Query("{ 'shapeType' : ?0 ")
 	List<Shape> findShapesByShapeType(String shapeType);
 }

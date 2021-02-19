@@ -31,8 +31,11 @@
 ## Реализация 2
 Реализовано с помощью  REST API на MongoDB.
 
-Запуск: 
+###### Запуск: 
 1. Включить обработку аннотаций:  Inrelij IDEA -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors -> ***Enabled Annotation Processing***
 2. Установить Lomboc плагин: Inrelij IDEA -> Settings -> Plugins -> ***Lomboc*** *Установить*
 3. Запуск проекта: com.app.restapp.Main
 4. API Cals -> [Примеры запросов PostMan](https://documenter.getpostman.com/view/8128788/TVt17PFY) 
+
+###### Запуск zkoss:
+`jetty:run` VM options: `-Djetty.http.port=8100`

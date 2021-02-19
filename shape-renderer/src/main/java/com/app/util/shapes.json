@@ -1,0 +1,286 @@
+[
+  {
+    "type": "Circle",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 9.0
+      },
+      {
+        "type": "Point2D",
+        "x": 9.0,
+        "y": 9.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 4.5,
+      "y": 9.0
+    },
+    "shapeType": "CIRCLE",
+    "area": 254.46900494077323,
+    "id": "5feb285fe8fa7158bee36331",
+    "radius": 9.0
+  },
+  {
+    "type": "Quadrangular",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": -2.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": -2.0
+      },
+      {
+        "type": "Point2D",
+        "x": -2.0,
+        "y": -2.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": -0.5,
+      "y": -0.5
+    },
+    "shapeType": "SQUARE",
+    "area": 6.0,
+    "id": "5feb2860e8fa7158bee36332"
+  },
+  {
+    "type": "Quadrangular",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 8.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 9.0,
+        "y": 2.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": 6.0
+      },
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 4.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 4.5,
+      "y": 3.0
+    },
+    "shapeType": "RECTANGLE",
+    "area": 36.0,
+    "id": "5feb2860e8fa7158bee36333"
+  },
+  {
+    "type": "Quadrangular",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": 2.0
+      },
+      {
+        "type": "Point2D",
+        "x": 2.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": -2.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 1.0,
+      "y": 0.0
+    },
+    "shapeType": "RHOMBUS",
+    "area": 4.0,
+    "id": "5feb2860e8fa7158bee36334"
+  },
+  {
+    "type": "Quadrangular",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 4.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 3.0,
+        "y": 0.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 2.0,
+      "y": 0.5
+    },
+    "shapeType": "PARALLELOGRAM",
+    "area": 3.0,
+    "id": "5feb2860e8fa7158bee36335"
+  },
+  {
+    "type": "Quadrangular",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 1.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 5.0,
+        "y": 1.0
+      },
+      {
+        "type": "Point2D",
+        "x": 3.0,
+        "y": 0.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 2.25,
+      "y": 0.5
+    },
+    "shapeType": "QUADRANGULAR",
+    "area": 3.5,
+    "id": "5feb2860e8fa7158bee36336"
+  },
+  {
+    "type": "Circle",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 9.0
+      },
+      {
+        "type": "Point2D",
+        "x": 9.0,
+        "y": 9.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 4.5,
+      "y": 9.0
+    },
+    "shapeType": "CIRCLE",
+    "area": 254.46900494077323,
+    "id": "5feb2860e8fa7158bee36337",
+    "radius": 9.0
+  },
+  {
+    "type": "Triangle",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 2.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": -3.0,
+        "y": 3.0
+      },
+      {
+        "type": "Point2D",
+        "x": -4.0,
+        "y": -2.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": -1.6666666666666667,
+      "y": 0.3333333333333333
+    },
+    "shapeType": "TRIANGLE",
+    "area": 12.0,
+    "id": "5feb2861e8fa7158bee36338"
+  },
+  {
+    "type": "Polygon",
+    "points": [
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 0.0,
+        "y": 6.0
+      },
+      {
+        "type": "Point2D",
+        "x": 6.0,
+        "y": 6.0
+      },
+      {
+        "type": "Point2D",
+        "x": 6.0,
+        "y": 0.0
+      },
+      {
+        "type": "Point2D",
+        "x": 4.0,
+        "y": -2.0
+      },
+      {
+        "type": "Point2D",
+        "x": 2.0,
+        "y": -2.0
+      }
+    ],
+    "center": {
+      "type": "Point2D",
+      "x": 3.0,
+      "y": 1.3333333333333333
+    },
+    "shapeType": "POLYGON",
+    "area": 44.0,
+    "id": "5feb2861e8fa7158bee36339"
+  }
+]
