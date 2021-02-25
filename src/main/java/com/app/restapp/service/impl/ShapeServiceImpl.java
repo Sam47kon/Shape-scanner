@@ -2,6 +2,7 @@ package com.app.restapp.service.impl;
 
 import com.app.consoleapp.helper.ShapeCreateHelper;
 import com.app.restapp.exception.ShapeNotFoundException;
+import com.app.restapp.model.point.Point;
 import com.app.restapp.model.point.Point2D;
 import com.app.restapp.model.shape.Shape;
 import com.app.restapp.model.shape.ShapeType;
@@ -26,11 +27,13 @@ public class ShapeServiceImpl implements ShapeService {
 
 	@Override
 	public Shape getById(String id) {
+		log.info("CALL: getById: id {}", id);
 		return findById(id);
 	}
 
 	@Override
 	public List<Shape> getAll() {
+		log.info("CALL: getAll");
 		return shapeRepository.findAll();
 	}
 
@@ -39,8 +42,15 @@ public class ShapeServiceImpl implements ShapeService {
 		Shape resultShape = ShapeCreateHelper.getShapeFactory(
 				ShapeType.valueOf(shape.getClass().getSimpleName().toUpperCase()))
 				.createShape(shape.getPoints());
-		log.debug("Created shape:\n" + shape);
+		log.info("CALL: insert:\n{}", shape);
 		return shapeRepository.save(resultShape);
+	}
+
+	@Override
+	public Shape createByPoints(List<Point> points) {
+		Shape resultShape = shapeRepository.save(ShapeCreateHelper.getShapeFactory(points).createShape(points));
+		log.info("CALL: createByPoints: points\n{}\nresultShape\n{}", points, resultShape);
+		return resultShape;
 	}
 
 	@Override
@@ -50,7 +60,7 @@ public class ShapeServiceImpl implements ShapeService {
 				ShapeType.valueOf(updatedShape.getClass().getSimpleName().toUpperCase()))
 				.createShape(updatedShape.getPoints());
 		resultShape.setId(id);
-		log.debug("Updated shape:\n" + resultShape);
+		log.info("CALL: update: id {}, result:\n{}", id, resultShape);
 		return shapeRepository.save(resultShape);
 	}
 
@@ -58,20 +68,20 @@ public class ShapeServiceImpl implements ShapeService {
 	public void deleteById(String id) {
 		findById(id);
 		shapeRepository.deleteById(id);
-		log.debug("Deleted id: " + id);
+		log.info("CALL: deleteById: id {}", id);
 	}
 
 	@Override
 	public void deleteAll() {
 		shapeRepository.deleteAll();
-		log.debug("Deleted all Shapes");
+		log.info("CALL: deleteAll");
 	}
 
 	@Override
 	public Shape rotateShape(String id, double angle) {
 		Shape shape = findById(id);
 		shape.rotate(angle);
-		log.debug("Rotated Shape id: " + id);
+		log.info("CALL: rotateShape: id {}, angle {}", id, angle);
 		return shapeRepository.save(shape);
 	}
 
@@ -79,7 +89,7 @@ public class ShapeServiceImpl implements ShapeService {
 	public Shape moveShape(String id, double x, double y) {
 		Shape shape = findById(id);
 		shape.move(new Point2D(x, y));
-		log.debug("Moved Shape id: " + id);
+		log.info("CALL: moveShape: id {}, x {}, y {}", id, x, y);
 		return shapeRepository.save(shape);
 	}
 
@@ -87,7 +97,7 @@ public class ShapeServiceImpl implements ShapeService {
 	public Shape increase(String id, double scale) {
 		Shape shape = findById(id);
 		shape.increase(scale);
-		log.debug("Increase Shape id: " + id);
+		log.info("CALL: increase: id {}, scale {}", id, scale);
 		return shapeRepository.save(shape);
 	}
 
@@ -95,13 +105,13 @@ public class ShapeServiceImpl implements ShapeService {
 	public Shape reduce(String id, double scale) {
 		Shape shape = findById(id);
 		shape.reduce(scale);
-		log.debug("Reduce Shape id: " + id);
+		log.info("CALL: reduce: id {}, scale {}", id, scale);
 		return shapeRepository.save(shape);
 	}
 
 	private Shape findById(String id) {
 		Shape shape = shapeRepository.findById(id).orElseThrow(() -> new ShapeNotFoundException(id));
-		log.debug("Find shape id:" + id + "\n" + shape);
+		log.info("CALL: findById: id {}\n{}", id, shape);
 		return shape;
 	}
 }

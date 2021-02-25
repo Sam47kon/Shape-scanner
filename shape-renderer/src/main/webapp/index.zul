@@ -1,7 +1,6 @@
 <zk>
     <window border="normal" title="Test">
         <vlayout>
-            <a href="car.zul">car.zul</a>
             <a href="shapes.zul">shapes.zul</a>
             <a href="zk/test/shapes">zk/shape richlet</a>
         </vlayout>

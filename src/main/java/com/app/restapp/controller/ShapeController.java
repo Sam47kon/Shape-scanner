@@ -1,5 +1,6 @@
 package com.app.restapp.controller;
 
+import com.app.restapp.model.point.Point;
 import com.app.restapp.model.shape.Shape;
 import com.app.restapp.service.ShapeService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +40,8 @@ public class ShapeController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Shape> createShape(@RequestBody Shape shape) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(shapeService.insert(shape));
+	public ResponseEntity<Shape> createShape(@RequestBody List<Point> points) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(shapeService.createByPoints(points));
 	}
 
 	@PutMapping("/{id}")
@@ -48,27 +49,24 @@ public class ShapeController {
 		return ResponseEntity.accepted().body(shapeService.update(id, shape));
 	}
 
-//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Shape> rotateShape(@PathVariable String id, @RequestBody double angle) {
-//		return ResponseEntity.accepted().body(shapeService.rotateShape(id, angle));
-//	}
-//
-//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Shape> moveShape(@PathVariable String id, @RequestBody double x, @RequestBody double y) {
-//		return ResponseEntity.accepted().body(shapeService.moveShape(id, x, y));
-//	}
-//
-//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Shape> increaseShape(@PathVariable String id, @RequestBody double scale) {
-//		return ResponseEntity.accepted().body(shapeService.increase(id, scale));
-//	}
-//
-//	// FIXME для одного PathVariable RequestBody не может быть несколько с одним типом. Исправить
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Shape> reduceShape(@PathVariable String id, @RequestBody double scale) {
-//		return ResponseEntity.accepted().body(shapeService.reduce(id, scale));
-//	}
+	@PutMapping("rotate/{id}")
+	public ResponseEntity<Shape> rotateShape(@PathVariable String id, @RequestParam(value = "angle", defaultValue = "0") double angle) {
+		return ResponseEntity.accepted().body(shapeService.rotateShape(id, angle));
+	}
+
+	@PutMapping("move/{id}")
+	public ResponseEntity<Shape> moveShape(@PathVariable String id, @RequestParam(value = "x", defaultValue = "0") double x,
+										   @RequestParam(value = "y", defaultValue = "0") double y) {
+		return ResponseEntity.accepted().body(shapeService.moveShape(id, x, y));
+	}
+
+	@PutMapping("increase/{id}")
+	public ResponseEntity<Shape> increaseShape(@PathVariable String id, @RequestParam(value = "scale", defaultValue = "1") double scale) {
+		return ResponseEntity.accepted().body(shapeService.increase(id, scale));
+	}
+
+	@PutMapping("reduce/{id}")
+	public ResponseEntity<Shape> reduceShape(@PathVariable String id, @RequestParam(value = "scale", defaultValue = "1") double scale) {
+		return ResponseEntity.accepted().body(shapeService.reduce(id, scale));
+	}
 }

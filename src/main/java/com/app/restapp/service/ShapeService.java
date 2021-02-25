@@ -1,5 +1,6 @@
 package com.app.restapp.service;
 
+import com.app.restapp.model.point.Point;
 import com.app.restapp.model.shape.Shape;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface ShapeService {
 	List<Shape> getAll();
 
 	Shape insert(Shape shape);
+
+	Shape createByPoints(List<Point> points);
 
 	Shape update(String id, Shape updatedShape);
 

@@ -1,11 +1,6 @@
 package com.app;
 
-import com.app.model.Shape;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import org.zkoss.zul.ListModelList;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -33,13 +28,6 @@ public class HttpConnect {
 
 	public static String requestGet() throws IOException {
 		HttpURLConnection connection = getConnection();
-//		Map<String, String> parameters = new HashMap<>();
-//		parameters.put("id", "123");
-//		connection.setDoOutput(true);
-//		DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-//		out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
-//		out.flush();
-//		out.close();
 		connection.setRequestMethod("GET");
 
 		InputStream in = new BufferedInputStream(connection.getInputStream());
@@ -53,18 +41,5 @@ public class HttpConnect {
 		reader.close();
 		connection.disconnect();
 		return result.toString();
-	}
-
-	// FIXME Приходит объект Shape с бэка, не конвертится в Shape
-//	@SuppressWarnings("unchecked")
-	public static ListModelList<Shape> getResponse() throws JsonProcessingException {
-		RestTemplate template = new RestTemplate();
-		ResponseEntity<ListModelList> response = template.getForEntity(URL, ListModelList.class);
-
-//		ObjectMapper mapper = new ObjectMapper();
-//		JsonNode root = mapper.readTree(String.valueOf(response.getBody()));
-//		JsonNode name = root.path("name");
-//		System.out.println("name = " + name);
-		return template.getForObject(URL, ListModelList.class);
 	}
 }

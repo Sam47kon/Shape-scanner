@@ -12,7 +12,9 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Composer;
 import org.zkoss.zk.ui.util.Template;
 import org.zkoss.zul.*;
+import org.zkoss.zul.impl.XulElement;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class ShapeRichlet extends GenericRichlet {
 
 		//1.Create root component which is to be associated with binder
 		final Window window = new Window("Richlet Test", "normal", false);
-		window.setWidth("800px");
+		window.setWidth("1000px");
 		window.setPage(page);
 
 		//2.Instantiate a binder instance. Use DefaultBinder
@@ -44,48 +46,68 @@ public class ShapeRichlet extends GenericRichlet {
 
 		vbox.appendChild(buildSearchBar(binder));
 		vbox.appendChild(buildShapeListBox(binder));
-		vbox.appendChild(buildToolbar(binder));
 		vbox.appendChild(buildFormArea(binder));
-
-//		// Фигуры
-//		Div divSearch = new Div();
-//		divSearch.setParent(window);
-//
-//		Html searchTitle = new Html("Поиск фигур");
-//		searchTitle.setParent(divSearch);
-//
-//		Textbox textboxSearch = new Textbox();
-//		textboxSearch.setPlaceholder("Введите текст...");
-//		textboxSearch.setAttribute("value", "@bind(vm.keyword)");
-//		textboxSearch.setParent(divSearch);
-//
-//		Button buttonSearch = new Button("Поиск");
-//		buttonSearch.setAttribute("onClick", "@command('search')");
-//		buttonSearch.setParent(divSearch);
-//
-//		Div divTable = new Div();
-//		divTable.setParent(window);
-//
-//
-//		Hlayout hlayoutSelItem = new Hlayout();
-//		hlayoutSelItem.setStyle("margin-top:20px");
-//		hlayoutSelItem.setWidth("100%");
-//		hlayoutSelItem.setParent(divTable);
-//
-//		Vlayout vlayout = new Vlayout();
-////		vlayout.setHflex("true");
-//		vlayout.setParent(hlayoutSelItem);
-//
-//		Label labelSelectedShape = new Label("@load(vm.selectedShape.points)");
-//		labelSelectedShape.setParent(vlayout);
-//
-//		Div actionDiv = new Div();
-//		actionDiv.setParent(window);
-//
-//		Html actionTitle = new Html("Действия с выбранной фигурой");
-//		actionTitle.setParent(actionDiv);
+		vbox.appendChild(buildCreateFormArea(binder));
 
 		binder.loadComponent(window, true);
+	}
+
+	private Groupbox buildCreateFormArea(Binder binder) {
+		Groupbox form = new Groupbox();
+		form.setHflex("true");
+
+		Grid grid = new Grid();
+		grid.setHflex("true");
+		grid.setParent(form);
+
+		Columns columns = new Columns();
+		columns.setSizable(true);
+		Column labelCol = new Column("Добавление фигуры");
+		labelCol.setWidth("250px");
+		columns.appendChild(labelCol);
+		columns.appendChild(new Column());
+		grid.appendChild(columns);
+
+		Rows rows = new Rows();
+		grid.appendChild(rows);
+
+		Row rowX = new Row();
+		rowX.appendChild(new Label("Введите X:"));
+		Doublebox boxX = new Doublebox();
+		binder.addPropertyLoadBindings(boxX, "value", "vm.x", null, null, null, null, null);
+		binder.addPropertySaveBindings(boxX, "value", "vm.x", null, null, null, null, null, null, null);
+		rowX.appendChild(boxX);
+		rows.appendChild(rowX);
+
+		Row rowY = new Row();
+		rowY.appendChild(new Label("Введите Y:"));
+		Doublebox boxY = new Doublebox();
+		binder.addPropertyLoadBindings(boxY, "value", "vm.y", null, null, null, null, null);
+		binder.addPropertySaveBindings(boxY, "value", "vm.y", null, null, null, null, null, null, null);
+		rowY.appendChild(boxY);
+		rows.appendChild(rowY);
+
+		Row pointsRow = new Row();
+		binder.addPropertyLoadBindings(pointsRow, "visible", "vm.points.size() != 0", null, null, null, null, null);
+		pointsRow.appendChild(new Label("Точки:"));
+		Label points = new Label();
+		binder.addPropertyLoadBindings(points, "value", "vm.points", null, null, null, null, null);
+		binder.addPropertySaveBindings(points, "value", "vm.points", null, null, null, null, null, null, null);
+		pointsRow.appendChild(points);
+		rows.appendChild(pointsRow);
+
+		Row rowSavePoint = new Row();
+		Button savePointBtn = new Button("Добавить координату");
+		binder.addCommandBinding(savePointBtn, Events.ON_CLICK, "'addPoint'", null);
+		binder.addPropertyLoadBindings(savePointBtn, "disabled", "empty vm.x || empty vm.y", null, null, null, null, null);
+		rowSavePoint.appendChild(savePointBtn);
+		Button createShape = new Button("Создать фигуру");
+		binder.addCommandBinding(createShape, Events.ON_CLICK, "'createShape'", null);
+		binder.addPropertyLoadBindings(createShape, "disabled", "vm.points.size() < 2", null, null, null, null, null);
+		rowSavePoint.appendChild(createShape);
+		rows.appendChild(rowSavePoint);
+
+		return form;
 	}
 
 	private Groupbox buildFormArea(Binder binder) {
@@ -96,7 +118,6 @@ public class ShapeRichlet extends GenericRichlet {
 		form.setHflex("true");
 		form.setVisible(false);
 		form.appendChild(messageStyle);
-
 		binder.addPropertyLoadBindings(form, "visible", "not empty vm.selectedShape", null, null, null, null, null);
 
 		Grid grid = new Grid();
@@ -104,48 +125,48 @@ public class ShapeRichlet extends GenericRichlet {
 		grid.setParent(form);
 
 		Columns columns = new Columns();
-		Column labelCol = new Column();
+		Column labelCol = new Column("Параметр");
 		labelCol.setWidth("120px");
 		columns.appendChild(labelCol);
-		columns.appendChild(new Column());
+		columns.appendChild(new Column("Значение"));
 		grid.appendChild(columns);
 
 		Rows rows = new Rows();
 		grid.appendChild(rows);
+
 		Row idRow = new Row();
 		idRow.appendChild(new Label("Id"));
 		Label idLabel = new Label();
 		idRow.appendChild(idLabel);
 		rows.appendChild(idRow);
-
 		binder.addPropertyLoadBindings(idLabel, "value", "vm.selectedShape.id", null, null, null, null, null);
 
 		Row shapeTypeRow = new Row();
 		shapeTypeRow.appendChild(new Label("Тип фигуры"));
-		Textbox shapeTypeBox = new Textbox();
-		shapeTypeRow.appendChild(shapeTypeBox);
+		Label shapeTypeLabel = new Label();
+		shapeTypeRow.appendChild(shapeTypeLabel);
 		rows.appendChild(shapeTypeRow);
+		binder.addPropertyLoadBindings(shapeTypeLabel, "value", "vm.selectedShape.shapeType", null, null, null, null, null);
 
-		String[] beforeCommand = {"save"};
-		binder.addPropertyLoadBindings(shapeTypeBox, "value", "vm.selectedShape.shapeType", null, null, null, null, null);
-		binder.addPropertySaveBindings(shapeTypeBox, "value", "vm.selectedShape.shapeType", beforeCommand, null, null, null, null, null, null);
+		Row pointsRow = new Row();
+		pointsRow.appendChild(new Label("Координаты"));
+		Label pointsLabel = new Label();
+		pointsRow.appendChild(pointsLabel);
+		rows.appendChild(pointsRow);
+		binder.addPropertyLoadBindings(pointsLabel, "value", "vm.selectedShape.points", null, null, null, null, null);
 
-		Listbox listbox = new Listbox();
-		listbox.setHflex("true");
-		listbox.setRows(5);
-		form.appendChild(listbox);
-		Listhead head = new Listhead();
-		listbox.appendChild(head);
-		head.appendChild(new Listheader("X"));
-		head.appendChild(new Listheader("Y"));
+//		String[] beforeCommand = {"create"};
 
-		// FIXME не отображаются x y
-		binder.addPropertyInitBinding(listbox, "model", "vm.selectedShape.points", null, null, null);
-		binder.addPropertyLoadBindings(listbox, "selectedPoint", "vm.selectedPoint", null, null, null, null, null);
-		binder.addPropertySaveBindings(listbox, "selectedPoint", "vm.selectedPoint", null, null, null, null, null, null, null);
+		Div div = new Div();
+		div.setHflex("true");
+		Image image = new Image("../resources/image/image1.png");
+		image.setStyle("margin: 20px");
+		image.setHeight("800");
+		image.setWidth("800");
+		div.appendChild(image);
+		form.appendChild(div);
 
-		listbox.setTemplate("model", new ListboxPointsTemplate());
-// TODO остановился здесь
+		form.appendChild(buildToolbar(binder));
 		return form;
 	}
 
@@ -176,33 +197,63 @@ public class ShapeRichlet extends GenericRichlet {
 		binder.addCommandBinding(textbox, Events.ON_OK, "'search'", null);
 
 		div.appendChild(searchButton);
+		setStyleForAll("margin: 10px", div, tittle, textbox, searchButton);
 		return div;
 	}
 
 	private Toolbar buildToolbar(Binder binder) {
-		Button newButton = new Button("Создать");
-		Button saveButton = new Button("Сохранить");
-		Button updateButton = new Button("Изменить");
-		Button deleteButton = new Button("Удалить");
-
 		Toolbar toolbar = new Toolbar();
-		toolbar.appendChild(newButton);
-		toolbar.appendChild(saveButton);
-		toolbar.appendChild(updateButton);
-		toolbar.appendChild(deleteButton);
 
-		binder.addCommandBinding(newButton, Events.ON_CLICK, "'newShape'", null);
+		toolbar.appendChild(buildDiv(binder, "Повернуть на:", "Повернуть", "vm.rotateAngle", "'rotateShape'", "empty vm.rotateAngle"));
+		toolbar.appendChild(buildDiv(binder, "Увеличить в:", "Увеличить", "vm.increaseScale", "'increaseShape'", "empty vm.increaseScale"));
+		toolbar.appendChild(buildDiv(binder, "Уменьшить в:", "Уменьшить", "vm.reduceScale", "'reduceShape'", "empty vm.reduceScale"));
 
-		binder.addCommandBinding(saveButton, Events.ON_CLICK, "'saveShape'", null);
-		binder.addPropertyLoadBindings(saveButton, "disabled", "empty vm.selectedShape", null, null, null, null, null);
+		Div moveShapeDiv = new Div();
+		Label label = new Label("Переместить");
+		moveShapeDiv.appendChild(label);
+		Doublebox moveX = new Doublebox();
+		moveShapeDiv.appendChild(moveX);
+		Doublebox moveY = new Doublebox();
+		moveShapeDiv.appendChild(moveY);
+		Button moveBtn = new Button("Переместить");
+		moveShapeDiv.appendChild(moveBtn);
+		toolbar.appendChild(moveShapeDiv);
 
-		binder.addCommandBinding(updateButton, Events.ON_CLICK, "'updateShape'", null);
-		binder.addPropertyLoadBindings(updateButton, "disabled", "empty vm.selectedShape", null, null, null, null, null);
+		binder.addPropertyLoadBindings(moveX, "value", "vm.moveX", null, null, null, null, null);
+		binder.addPropertySaveBindings(moveX, "value", "vm.moveX", null, null, null, null, null, null, null);
+		binder.addPropertyLoadBindings(moveY, "value", "vm.moveY", null, null, null, null, null);
+		binder.addPropertySaveBindings(moveY, "value", "vm.moveY", null, null, null, null, null, null, null);
+		binder.addCommandBinding(moveBtn, Events.ON_CLICK, "'moveShape'", null);
+		binder.addPropertyLoadBindings(moveBtn, "disabled", "empty vm.moveX || empty vm.moveY", null, null, null, null, null);
 
-		binder.addCommandBinding(deleteButton, Events.ON_CLICK, "empty vm.selectedShape.id?'deleteShape':'confirmDelete'", null);
-		binder.addPropertyLoadBindings(deleteButton, "disabled", "empty vm.selectedShape", null, null, null, null, null);
-
+		// TODO кнопка удалить добавить (зачем удалил? делал же...)
+		setStyleForAll("margin: 10px", moveShapeDiv, label, moveX, moveY, moveBtn);
 		return toolbar;
+	}
+
+	private Div buildDiv(Binder binder, String textLabel, String textBtn, String saveExpr, String commandExpr, String loadExpr) {
+		Div div = new Div();
+		Label label = new Label(textLabel);
+		label.setWidth("150px");
+		div.appendChild(label);
+		Doublebox doublebox = new Doublebox();
+		doublebox.setWidth("100px");
+		div.appendChild(doublebox);
+		Button button = new Button(textBtn);
+		button.setWidth("150px");
+		div.appendChild(button);
+
+		setStyleForAll("margin: 10px", div, label, doublebox, button);
+
+		binder.addPropertyLoadBindings(doublebox, "value", saveExpr, null, null, null, null, null);
+		binder.addPropertySaveBindings(doublebox, "value", saveExpr, null, null, null, null, null, null, null);
+		binder.addCommandBinding(button, Events.ON_CLICK, commandExpr, null);
+		binder.addPropertyLoadBindings(button, "disabled", loadExpr, null, null, null, null, null);
+		return div;
+	}
+
+	private void setStyleForAll(String style, XulElement... elements) {
+		Arrays.stream(elements).forEach(element -> element.setStyle(style));
 	}
 
 	private Component buildShapeListBox(Binder binder) {
@@ -224,39 +275,6 @@ public class ShapeRichlet extends GenericRichlet {
 
 		listbox.setTemplate("model", new ListboxTemplate());
 		return listbox;
-	}
-
-	private class ListboxPointsTemplate implements Template {
-
-		@Override
-		public Component[] create(Component parent, Component insertBefore, VariableResolver resolver, Composer composer) {
-			Listitem listitem = new Listitem();
-
-			Listcell x = new Listcell();
-			listitem.appendChild(x);
-			binder.addPropertyLoadBindings(x, "label", "item.x", null, null, null, null, null);
-
-			Listcell y = new Listcell();
-			listitem.appendChild(y);
-			binder.addPropertyLoadBindings(y, "label", "item.x", null, null, null, null, null);
-
-			if (insertBefore == null) {
-				parent.appendChild(listitem);
-			} else {
-				parent.insertBefore(listitem, insertBefore);
-			}
-
-			Component[] components = new Component[1];
-			components[0] = listitem;
-			return components;
-		}
-
-		@Override
-		public Map<String, Object> getParameters() {
-			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("var", "item");
-			return parameters;
-		}
 	}
 
 	private class ListboxTemplate implements Template {
