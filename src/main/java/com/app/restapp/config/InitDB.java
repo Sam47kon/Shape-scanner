@@ -5,6 +5,7 @@ import com.app.restapp.model.point.Point2D;
 import com.app.restapp.model.shape.Shape;
 import com.app.restapp.model.shape.polygon.quadrangular.Quadrangular;
 import com.app.restapp.service.ShapeService;
+import com.mongodb.MongoException;
 import com.mongodb.client.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,12 @@ public class InitDB implements CommandLineRunner {
 		this.shapeService = shapeService;
 	}
 
-	private static void testConnectionDB() {
+	public static Boolean testConnectionDB(String name, String password) {
 		Logger.getLogger("org.mongodb.").setLevel(Level.WARNING);
-		try (MongoClient mongoClient = MongoClients.create(MongoConfig.URI)) {
+		String URI = "mongodb+srv://" + name + ":" + password
+				+ "@cluster0.isrzl.mongodb.net/shape-app?retryWrites=true&w=majority";
+
+		try (MongoClient mongoClient = MongoClients.create(URI)) {
 			MongoIterable<String> strings = mongoClient.listDatabaseNames();
 			MongoCursor<String> cursor = strings.cursor();
 			Map<String, MongoDatabase> mongoDatabases = new HashMap<>();
@@ -48,6 +52,13 @@ public class InitDB implements CommandLineRunner {
 					+ "----------------------------------------------------------------------------------");
 			// Нужная БД
 			MongoDatabase shapeDB = mongoDatabases.get("shape-app");
+			return shapeDB != null;
+		} catch (MongoException e) {
+			log.error("Command failed with error 8000. Name = {}, Password = {}", name, password);
+			return false;
+		} catch (IllegalArgumentException e) {
+			log.error("No username is provided in the connection string. Name = {}, Password = {}", name, password);
+			return false;
 		}
 	}
 

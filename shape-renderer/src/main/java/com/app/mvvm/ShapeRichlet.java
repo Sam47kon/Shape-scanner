@@ -159,12 +159,20 @@ public class ShapeRichlet extends GenericRichlet {
 
 		Div div = new Div();
 		div.setHflex("true");
-		Image image = new Image("../resources/image/image1.png");
+		Image image = new Image("/image/image1.png");
+		binder.addPropertySaveBindings(image, "image", "vm.srcImg", null, null, null, null, null, null, null);
+		binder.addPropertyLoadBindings(image, "image", "vm.srcImg", null, null, null, null, null);
 		image.setStyle("margin: 20px");
 		image.setHeight("800");
 		image.setWidth("800");
 		div.appendChild(image);
 		form.appendChild(div);
+
+		// TODO остановился тут
+//		Chart chart = new Chart();
+//		ChartModel model = new SimpleXYZModel();
+////		model.
+//		chart.setModel(model);
 
 		form.appendChild(buildToolbar(binder));
 		return form;
@@ -234,10 +242,10 @@ public class ShapeRichlet extends GenericRichlet {
 	private Div buildDiv(Binder binder, String textLabel, String textBtn, String saveExpr, String commandExpr, String loadExpr) {
 		Div div = new Div();
 		Label label = new Label(textLabel);
-		label.setWidth("150px");
+		label.setHflex("true");
 		div.appendChild(label);
 		Doublebox doublebox = new Doublebox();
-		doublebox.setWidth("100px");
+		doublebox.setWidth("150px");
 		div.appendChild(doublebox);
 		Button button = new Button(textBtn);
 		button.setWidth("150px");
@@ -265,6 +273,7 @@ public class ShapeRichlet extends GenericRichlet {
 		Listhead head = new Listhead();
 		listbox.appendChild(head);
 		head.setSizable(true);
+//		head.appendChild(new Listheader("№ п/п"));
 		head.appendChild(new Listheader("ID"));
 		head.appendChild(new Listheader("Фигура"));
 		head.appendChild(new Listheader("Центр"));
@@ -282,6 +291,10 @@ public class ShapeRichlet extends GenericRichlet {
 		@Override
 		public Component[] create(Component parent, Component insertBefore, VariableResolver resolver, Composer composer) {
 			Listitem listitem = new Listitem();
+
+//			Listcell numCell = new Listcell();
+//			listitem.appendChild(numCell);
+//			binder.addPropertyLoadBindings(numCell, "label", "item.counter", null, null, null, null, null);
 
 			Listcell idCell = new Listcell();
 			listitem.appendChild(idCell);

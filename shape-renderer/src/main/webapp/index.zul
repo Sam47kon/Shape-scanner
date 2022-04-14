@@ -1,8 +1,9 @@
 <zk>
-    <window border="normal" title="Test">
-        <vlayout>
-            <a href="shapes.zul">shapes.zul</a>
-            <a href="zk/test/shapes">zk/shape richlet</a>
-        </vlayout>
+    <window border="normal" title="Добро пожаловать">
+        <?forward uri="zk/test/login"?>
+        <!--        <vlayout>-->
+        <!--            <a href="shapes.zul">shapes.zul</a>-->
+        <!--            <a href="zk/test/shapes">zk/shape richlet</a>-->
+        <!--        </vlayout>-->
     </window>
 </zk>

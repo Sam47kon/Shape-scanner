@@ -29,6 +29,7 @@ public class ShapeViewModel {
 	private Double moveY;
 	private Double increaseScale;
 	private Double reduceScale;
+	private String srcImg = "/image/image1.png";
 
 	private Shape newShape;
 	private Double x;
@@ -78,7 +79,7 @@ public class ShapeViewModel {
 	}
 
 	@Command
-	@NotifyChange({"points", "x", "y", "shapes", "selectedShape"})
+	@NotifyChange({"points", "x", "y", "shapes", "selectedShape", "srcImg"})
 	public void createShape() {
 		Shape createdShape = shapeService.create(points);
 		log.info("CALL: createShape: {}", createdShape.toString());

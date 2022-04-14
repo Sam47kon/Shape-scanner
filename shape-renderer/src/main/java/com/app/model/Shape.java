@@ -41,7 +41,7 @@ public class Shape {
 
 	public void createImage(String shapeId) {
 //		File file = getFileFromResource("image/" + shapeId);
-		File file = new File("src/main/resources/image/image1.png");
+		File file = new File("src/main/webapp/image/image1.png");
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(drawImage(), null), "png", file);
 		} catch (IOException e) {

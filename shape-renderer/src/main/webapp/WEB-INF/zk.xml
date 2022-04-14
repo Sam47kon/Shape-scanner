@@ -15,4 +15,12 @@
         <url-pattern>/test/shapes</url-pattern>
     </richlet-mapping>
 
+    <richlet>
+        <richlet-name>LoginRichlet</richlet-name><!-- your preferred name -->
+        <richlet-class>com.app.mvvm.LoginRichlet</richlet-class><!-- your class name, of course -->
+    </richlet>
+    <richlet-mapping>
+        <richlet-name>LoginRichlet</richlet-name>
+        <url-pattern>/test/login</url-pattern>
+    </richlet-mapping>
 </zk>

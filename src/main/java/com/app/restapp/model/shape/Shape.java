@@ -79,5 +79,7 @@ public abstract class Shape implements ITransformable, Serializable {
 	public String toString() {
 		return shapeType.toString() + "\n\tКоординаты: " + points + " Центральная точка: " + center;
 	}
+
+
 }
 

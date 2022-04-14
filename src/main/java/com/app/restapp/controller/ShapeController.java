@@ -1,5 +1,6 @@
 package com.app.restapp.controller;
 
+import com.app.restapp.config.InitDB;
 import com.app.restapp.model.point.Point;
 import com.app.restapp.model.shape.Shape;
 import com.app.restapp.service.ShapeService;
@@ -21,6 +22,14 @@ public class ShapeController {
 	@Autowired
 	public ShapeController(ShapeService shapeService) {
 		this.shapeService = shapeService;
+	}
+
+	@GetMapping(value = "login/")
+	public ResponseEntity<String> getShape(@RequestParam(value = "name", defaultValue = "") String name, @RequestParam(value = "password",
+			defaultValue = "") String password) {
+		Boolean isAuthorized = InitDB.testConnectionDB(name, password);
+		return isAuthorized ? ResponseEntity.ok("OK")
+				: new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
 	}
 
 	@GetMapping(value = "/{id}")
